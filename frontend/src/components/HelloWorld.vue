@@ -17,8 +17,10 @@
 
 <script lang="ts" setup>
 import { reactive } from "vue";
+import { useToast } from "vue-toastification";
 import { Greet } from "../../wailsjs/go/app/App";
 
+const toast = useToast();
 const data = reactive({
     name: "",
     resultText: "Please enter your name below 👇",
@@ -27,6 +29,7 @@ const data = reactive({
 function greet() {
     Greet(data.name).then((result) => {
         data.resultText = result;
+        toast.success(`Hello, ${result}!`);
     });
 }
 </script>
