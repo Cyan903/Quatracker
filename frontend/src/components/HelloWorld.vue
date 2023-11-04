@@ -6,7 +6,7 @@
                 id="name"
                 v-model="data.name"
                 autocomplete="off"
-                class="input"
+                class="input input-bordered"
                 type="text"
             />
 
@@ -29,7 +29,7 @@ const data = reactive({
 function greet() {
     Greet(data.name).then((result) => {
         data.resultText = result;
-        toast.success(`Hello, ${result}!`);
+        toast.success(result);
     });
 }
 </script>
