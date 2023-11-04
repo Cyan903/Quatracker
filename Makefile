@@ -1,4 +1,4 @@
-APP = "QuaverBuddy" # App name
+APP = "QuaverBuddy"
 WEB = ${PWD}/frontend
 PKG = npm # pnpm, yarn, etc...
 
