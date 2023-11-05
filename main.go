@@ -8,6 +8,7 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 
 	"github.com/Cyan903/QuaverBuddy/backend/app"
+	"github.com/Cyan903/QuaverBuddy/backend/pkg/config"
 	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
 )
 
@@ -16,6 +17,7 @@ var assets embed.FS
 
 func main() {
 	app := app.NewApp()
+	config.Data = config.LoadConfig()
 
 	if err := wails.Run(&options.App{
 		Title:            "QuaverBuddy",

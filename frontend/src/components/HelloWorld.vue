@@ -30,6 +30,6 @@ function greet() {
     Greet(data.name).then((result) => {
         data.resultText = result;
         toast.success(result);
-    });
+    }).catch(e => toast.error(e));
 }
 </script>
