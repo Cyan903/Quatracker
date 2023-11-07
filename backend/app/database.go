@@ -6,6 +6,6 @@ func (a *App) LoadDB() error {
 	return database.LoadDB()
 }
 
-func (a *App) GetScores() ([]string, error) {
+func (a *App) GetScores() ([]database.ScoreBoard, error) {
 	return database.GetScores()
 }

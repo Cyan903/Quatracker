@@ -3,63 +3,66 @@ import { computed, onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 
 import { GetConfig, LoadDB, SetGamePath } from "../../wailsjs/go/app/App";
-import { LogError, LogInfo } from "../../wailsjs/runtime/runtime";
+import { LogInfo } from "../../wailsjs/runtime/runtime";
 import { config } from "../../wailsjs/go/models";
+import { useWails } from "../use/useWails";
 
 const toast = useToast();
 
 export const useConfigStore = defineStore("config", () => {
-    const data = ref<config.Config>();
+    const err = ref(true);
+    const data = ref<config.Config>({
+        GamePath: "",
+    });
 
     // TODO: Improve
     const validConfig = computed(() => {
-        return data.value?.GamePath?.length != 0;
+        return !err.value;
     });
 
-    const connectSQL = async () => {
-        if (!data.value?.GamePath) {
-            LogInfo("Skipping connection test due to config being incomplete");
-            return;
+    const setGamePath = async (path: string): Promise<boolean> => {
+        const game = await useWails(SetGamePath, path);
+
+        if (game.error) {
+            err.value = true;
+            toast.error("Could not set game path!");
+
+            return true;
         }
 
-        try {
-            await LoadDB();
-            LogInfo("Connected to quaver.db");
-        } catch (e) {
-            toast.error("Could not connect to quaver.db, is path correct?");
-
-            LogError("[config.ts] could not connect to quaver.db");
-            LogError(`[config.ts] ${e}`);
-        }
+        await refresh();
+        return err.value;
     };
 
     const refresh = async () => {
-        try {
-            data.value = await GetConfig();
+        const cfgs = await useWails<config.Config>(GetConfig);
 
-            LogInfo("Loaded configuration");
-            await connectSQL();
-        } catch (e) {
-            toast.error("Could not load configuration file.");
+        if (cfgs.error || !cfgs.result) {
+            err.value = true;
 
-            LogError("[config.ts] could not load config");
-            LogError(`[config.ts] ${e}`);
+            if (cfgs.error) {
+                toast.error("Could not import configuration!");
+            }
+
+            return;
         }
-    };
 
-    const setGamePath = async (path: string): Promise<boolean> => {
-        try {
-            await SetGamePath(path);
-            await refresh();
-            LogInfo(`Updated path -> ${path}`);
+        data.value = cfgs.result;
 
-            return true;
-        } catch (e) {
-            LogError("[config.ts] could not set game path");
-            LogError(`[config.ts] ${e}`);
+        // Test Connection
+        const conn = await useWails(LoadDB);
 
-            return false;
+        if (conn.error) {
+            err.value = true;
+            toast.error(
+                "Could not connect to database, is the game path correct?",
+            );
+
+            return;
         }
+
+        LogInfo("[config.ts] loaded configuration");
+        err.value = false;
     };
 
     onMounted(refresh);

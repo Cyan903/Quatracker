@@ -1,7 +1,9 @@
 <template>
     <div>
         <p class="my-4">Path to Quaver's game files...</p>
-        <code>/home/hwk/.local/share/Steam/steamapps/common/Quaver/</code>
+        <code class="block my-2">
+            /home/hwk/.local/share/Steam/steamapps/common/Quaver/
+        </code>
 
         <input
             type="text"
@@ -34,16 +36,11 @@ const invalid = computed(() => {
     return false;
 });
 
-const setPath = () => {
-    try {
-        if (!cfg.setGamePath(path.value)) {
-            toast.error("Could not set game path!");
-            return;
-        }
+const setPath = async () => {
+    const pathTest = await cfg.setGamePath(path.value);
 
+    if (!pathTest) {
         toast.success(`Quaver's path has been set to ${path.value}`);
-    } catch (e) {
-        toast.error(`Could not set game path - ${e}`);
     }
 };
 

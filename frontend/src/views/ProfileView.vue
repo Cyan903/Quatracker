@@ -17,12 +17,13 @@ import { useToast } from "vue-toastification";
 
 import { GetScores } from "../../wailsjs/go/app/App";
 import { useConfigStore } from "../store/config";
+import { database } from "../../wailsjs/go/models";
 
 import PageNotAvailable from "../components/config/PageNotAvailable.vue";
 
 const cfg = useConfigStore();
 const toast = useToast();
-const scores = ref<string[]>([]);
+const scores = ref<database.ScoreBoard[]>([]);
 
 const c = () => {
     GetScores()

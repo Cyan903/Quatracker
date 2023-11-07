@@ -1,6 +1,7 @@
 package database
 
 import (
+	"context"
 	"database/sql"
 	"errors"
 	"path"
@@ -28,5 +29,21 @@ func LoadDB() error {
 	}
 
 	Conn = db
+	return TestConnection()
+}
+
+func TestConnection() error {
+	var testItem int
+
+	c, cancel := context.WithTimeout(context.Background(), DefaultTimeout)
+	query := Conn.QueryRowContext(c, "SELECT 1 FROM QuaverSettings LIMIT 1")
+
+	defer cancel()
+
+	if err := query.Scan(&testItem); err != nil && err != sql.ErrNoRows {
+		log.Error.Println("error testing connection", err)
+		return err
+	}
+
 	return nil
 }
