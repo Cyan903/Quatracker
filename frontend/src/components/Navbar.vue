@@ -9,11 +9,11 @@
         </a>
 
         <a
-            @click="vist('/about')"
-            :class="visited('/about')"
+            @click="vist('/config')"
+            :class="visited('/config')"
             class="tab tab-lg tab-lifted"
         >
-            About
+            Configuration
         </a>
     </div>
 </template>
