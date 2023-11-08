@@ -3,7 +3,8 @@
         <h2>Profile</h2>
         <PageNotAvailable v-if="!cfg.validConfig" />
         <template v-else>
-            <button @click="c">c</button>
+            <button @click="c" class="btn">c</button>
+            <button @click="r" class="btn">r</button>
             <pre>{{ scores }}</pre>
             <pre>{{ cfg.data }}</pre>
             <pre>{{ cfg.validConfig }}</pre>
@@ -15,8 +16,8 @@
 import { ref } from "vue";
 import { useToast } from "vue-toastification";
 
-import { GetScores } from "../../wailsjs/go/app/App";
 import { useConfigStore } from "../store/config";
+import { GetBestScores, GetRecentScores } from "../../wailsjs/go/app/App";
 import { database } from "../../wailsjs/go/models";
 
 import PageNotAvailable from "../components/config/PageNotAvailable.vue";
@@ -26,7 +27,15 @@ const toast = useToast();
 const scores = ref<database.ScoreBoard[]>([]);
 
 const c = () => {
-    GetScores()
+    GetBestScores(1, 2, 0)
+        .then((s) => (scores.value = s))
+        .catch((e) => {
+            toast.error(e);
+        });
+};
+
+const r = () => {
+    GetRecentScores(1, 2, 0)
         .then((s) => (scores.value = s))
         .catch((e) => {
             toast.error(e);

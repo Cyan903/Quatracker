@@ -12,8 +12,10 @@ import (
 	_ "github.com/mattn/go-sqlite3"
 )
 
+const DefaultTimeout = 3 * time.Second
+const DefaultPaginate = 10
+
 var ErrInvalidPath = errors.New("invalid game path")
-var DefaultTimeout = 3 * time.Second
 var Conn *sql.DB
 
 func LoadDB() error {
