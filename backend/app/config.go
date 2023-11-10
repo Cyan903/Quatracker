@@ -7,7 +7,7 @@ import (
 	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
 )
 
-func cloneStruct(orig *config.Config) (*config.Config, error) {
+func ccopy(orig *config.Config) (*config.Config, error) {
 	og, err := json.Marshal(orig)
 
 	if err != nil {
@@ -28,7 +28,7 @@ func (a *App) GetConfig() config.Config {
 }
 
 func (a *App) SetGamePath(path string) error { 
-	cfg, err := cloneStruct(&config.Data)
+	cfg, err := ccopy(&config.Data)
 
 	if err != nil {
 		log.Error.Println("could not clone config", err)

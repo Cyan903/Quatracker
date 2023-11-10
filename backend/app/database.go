@@ -7,7 +7,7 @@ func (a *App) LoadDB() error {
 }
 
 func (a *App) GetBestScores(uid, mode, page int) ([]database.ScoreBoard, error) {
-	return database.GetBestScores(uid, mode, page, "", "", 0.25)
+	return database.GetBestScores(uid, mode, page, "OD 0", "", -1.0)
 }
 
 func (a *App) GetRecentScores(uid, mode, page int) ([]database.ScoreBoard, error) {
@@ -16,4 +16,12 @@ func (a *App) GetRecentScores(uid, mode, page int) ([]database.ScoreBoard, error
 
 func (a *App) GetScoreDetails(score int) (database.ScoreDetails, error) {
 	return database.GetScoreDetails(score)
+}
+
+func (a *App) GetUsers() (database.Users, error) {
+	return database.GetUsers()
+}
+
+func (a *App) GetUserJudgements() ([]string, error) {
+	return database.GetUserJudgements()
 }

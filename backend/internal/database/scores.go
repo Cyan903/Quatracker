@@ -156,7 +156,7 @@ func GetBestScores(
 			Score.LocalProfileID = ? AND
 			(
 				SELECT Id from Score WHERE MapMd5 = Map.Md5Checksum
-					%[1]s %[2]s
+					AND Score.LocalProfileID = ? %[1]s %[2]s
 				ORDER BY PerformanceRating DESC LIMIT 1
 			) == Score.Id
 
@@ -169,7 +169,7 @@ func GetBestScores(
 	c, cancel := context.WithTimeout(context.Background(), DefaultTimeout)
 	row, err := Conn.QueryContext(
 		c, query,
-		mode, uid,
+		mode, uid, uid,
 
 		// Optional
 		judgementWindowPreset, api.RevertRankedStatus(RankedStatus),

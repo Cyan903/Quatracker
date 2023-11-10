@@ -6,6 +6,8 @@
             <button @click="c" class="btn">c</button>
             <button @click="r" class="btn">r</button>
             <button @click="d" class="btn">d</button>
+            <button @click="u" class="btn">u</button>
+            <button @click="j" class="btn">j</button>
             <input type="number" class="input" v-model="id" />
             <hr />
 
@@ -21,8 +23,13 @@ import { ref } from "vue";
 import { useToast } from "vue-toastification";
 
 import { useConfigStore } from "../store/config";
-import { GetBestScores, GetRecentScores, GetScoreDetails } from "../../wailsjs/go/app/App";
-import { database } from "../../wailsjs/go/models";
+import {
+    GetBestScores,
+    GetRecentScores,
+    GetScoreDetails,
+    GetUsers,
+    GetUserJudgements
+} from "../../wailsjs/go/app/App";
 
 import PageNotAvailable from "../components/config/PageNotAvailable.vue";
 
@@ -49,6 +56,22 @@ const r = () => {
 
 const d = () => {
     GetScoreDetails(id.value)
+        .then((s) => (scores.value = s))
+        .catch((e) => {
+            toast.error(e);
+        });
+};
+
+const u = () => {
+    GetUsers()
+        .then((s) => (scores.value = s))
+        .catch((e) => {
+            toast.error(e);
+        });
+};
+
+const j = () => {
+    GetUserJudgements()
         .then((s) => (scores.value = s))
         .catch((e) => {
             toast.error(e);
