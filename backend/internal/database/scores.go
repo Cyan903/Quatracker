@@ -2,6 +2,7 @@ package database
 
 import (
 	"context"
+	"database/sql"
 	"fmt"
 
 	"github.com/Cyan903/QuaverBuddy/backend/pkg/api"
@@ -9,8 +10,8 @@ import (
 )
 
 type ScoreBoard struct {
-	ScoreID string
-	MapID   string
+	ScoreID int
+	MapID   int
 
 	Score struct {
 		Name                  string
@@ -22,7 +23,7 @@ type ScoreBoard struct {
 		Mods                  string
 		PerformanceRating     float64
 		JudgementWindowPreset string
-	} `json:"score"`
+	}
 
 	Map struct {
 		Directory      string
@@ -34,7 +35,75 @@ type ScoreBoard struct {
 		Creator        string
 		RankedStatus   string
 		LNPercent      float64
-	} `json:"map"`
+	}
+}
+
+type ScoreDetails struct {
+	ScoreID int
+	MapID   int
+
+	Score struct {
+		LocalProfileId        int
+		Name                  string
+		DateTime              string
+		TotalScore            int
+		Grade                 string
+		MaxCombo              int
+		Mods                  string
+		Mode                  int
+		ScrollSpeed           int
+		PauseCount            int
+		PerformanceRating     float64
+		JudgementWindowPreset string
+
+		JudgedHits struct {
+			Accuracy       float64
+			RankedAccuracy float64
+			CountMarv      int
+			CountPerf      int
+			CountGreat     int
+			CountGood      int
+			CountOkay      int
+			CountMiss      int
+		}
+
+		JudgementConfig struct {
+			CountMarv  int
+			CountPerf  int
+			CountGreat int
+			CountGood  int
+			CountOkay  int
+			CountMiss  int
+		}
+
+		Versions struct {
+			RatingVersion     string
+			DifficultyVersion string
+		}
+	}
+
+	Map struct {
+		Directory      string
+		Path           string
+		BackgroundPath string
+		Artist         string
+		Title          string
+		DifficultyName string
+		Creator        string
+		RankedStatus   string
+
+		DifficultyInfo struct {
+			SongLength int
+			BPM        float64
+			LNPercent  float64
+			Rating     float64
+		}
+
+		ModeInfo struct {
+			DifficultyProcessorVersion string
+			HasScratchKey              bool
+		}
+	}
 }
 
 // TODO: Optional filter by:
@@ -68,6 +137,8 @@ func GetBestScores(
 		optionalLNPercent = "AND LN >= ?"
 	}
 
+	// Not the cleanest solution, but I don't see a point in using
+	// a query builder for a single function.
 	query := fmt.Sprintf(`
 		SELECT
 			Score.Id as SID,
@@ -213,4 +284,58 @@ func GetRecentScores(
 	}
 
 	return scores, nil
+}
+
+func GetScoreDetails(id int) (ScoreDetails, error) {
+	var details ScoreDetails
+	var grade int
+	var status int
+
+	c, cancel := context.WithTimeout(context.Background(), DefaultTimeout)
+	query := Conn.QueryRowContext(c, `
+		SELECT
+			Score.Id as SID,
+			Score.LocalProfileId, Score.Name, Score.DateTime, Score.TotalScore,
+			Score.Grade, Score.Accuracy, Score.MaxCombo, Score.CountMarv,
+			Score.CountPerf, Score.CountGreat, Score.CountGood, Score.CountOkay, Score.CountMiss,
+			Score.Mods, Score.Mode, Score.ScrollSpeed, Score.PauseCount, Score.PerformanceRating,
+			Score.RatingProcessorVersion, Score.DifficultyProcessorVersion, Score.JudgementWindowPreset,
+			Score.JudgementWindowMarv, Score.JudgementWindowPerf, Score.JudgementWindowGreat, Score.JudgementWindowGood,
+			Score.JudgementWindowOkay, Score.JudgementWindowMiss, Score.RankedAccuracy,
+
+			Map.Id as MID,
+			Map.Directory, Map.Path, Map.BackgroundPath, Map.Artist, Map.Title, Map.DifficultyName, Map.Creator, Map.RankedStatus,
+			Map.SongLength, Map.Bpm, Map.DifficultyProcessorVersion,
+			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
+			Map.HasScratchKey, Map.Difficulty10x
+		FROM Score join Map WHERE 
+			Score.MapMd5 = Map.Md5Checksum AND
+			Score.Id = ?
+	`, id)
+
+	defer cancel()
+
+	if err := query.Scan(
+		&details.ScoreID,
+		&details.Score.LocalProfileId, &details.Score.Name, &details.Score.DateTime, &details.Score.TotalScore,
+		&grade, &details.Score.JudgedHits.Accuracy, &details.Score.MaxCombo, &details.Score.JudgedHits.CountMarv,
+		&details.Score.JudgedHits.CountPerf, &details.Score.JudgedHits.CountGreat, &details.Score.JudgedHits.CountGood, &details.Score.JudgedHits.CountOkay, &details.Score.JudgedHits.CountMiss,
+		&details.Score.Mods, &details.Score.Mode, &details.Score.ScrollSpeed, &details.Score.PauseCount, &details.Score.PerformanceRating,
+		&details.Score.Versions.RatingVersion, &details.Score.Versions.DifficultyVersion, &details.Score.JudgementWindowPreset,
+		&details.Score.JudgementConfig.CountMarv, &details.Score.JudgementConfig.CountPerf, &details.Score.JudgementConfig.CountGreat, &details.Score.JudgementConfig.CountGood,
+		&details.Score.JudgementConfig.CountOkay, &details.Score.JudgementConfig.CountMiss, &details.Score.JudgedHits.RankedAccuracy,
+
+		&details.MapID,
+		&details.Map.Directory, &details.Map.Path, &details.Map.BackgroundPath, &details.Map.Artist, &details.Map.Title, &details.Map.DifficultyName, &details.Map.Creator, &status,
+		&details.Map.DifficultyInfo.SongLength, &details.Map.DifficultyInfo.BPM, &details.Map.ModeInfo.DifficultyProcessorVersion,
+		&details.Map.DifficultyInfo.LNPercent,
+		&details.Map.ModeInfo.HasScratchKey, &details.Map.DifficultyInfo.Rating,
+	); err != nil && err != sql.ErrNoRows {
+		log.Error.Println("could not scan GetScoreDetails", err)
+		return details, err
+	}
+
+	details.Score.Grade = api.ConvertGrade(details.Score.JudgedHits.Accuracy, grade)
+	details.Map.RankedStatus = api.ConvertRankedStatus(status)
+	return details, nil
 }
