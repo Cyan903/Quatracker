@@ -94,8 +94,3 @@ func GetUserJudgements() ([]string, error) {
 
 	return judgements, nil
 }
-
-// Calculate stats based on ranked maps, unranked, unsubmitted, etc...
-func GetUserStats() {
-	panic("unimplemented")
-}
