@@ -6,7 +6,6 @@ import { GetConfig, LoadDB, SetGamePath } from "../../wailsjs/go/app/App";
 import { LogInfo } from "../../wailsjs/runtime/runtime";
 import { config } from "../../wailsjs/go/models";
 import { useWails } from "../use/useWails";
-import { initUsers } from "../use/useUsers";
 
 const toast = useToast();
 
@@ -63,8 +62,6 @@ export const useConfigStore = defineStore("config", () => {
         }
 
         LogInfo("[config.ts] loaded configuration");
-
-        await initUsers();
         err.value = false;
     };
 

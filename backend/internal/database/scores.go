@@ -175,7 +175,7 @@ func GetBestScores(
 		judgementWindowPreset, api.RevertRankedStatus(RankedStatus),
 		judgementWindowPreset, api.RevertRankedStatus(RankedStatus), LNPercent,
 
-		page,
+		page*DefaultPaginate,
 	)
 
 	defer cancel()
@@ -248,7 +248,7 @@ func GetRecentScores(
 			Score.LocalProfileID = ? AND
 			Score.Grade != ?
 		ORDER BY Score.Id DESC LIMIT ?, 10;
-	`, mode, uid, failed, page)
+	`, mode, uid, failed, page*DefaultPaginate)
 
 	defer cancel()
 

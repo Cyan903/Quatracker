@@ -9,7 +9,7 @@ const router = createRouter({
     routes: [
         {
             path: "/",
-            name: "profile",
+            name: "Profile",
             component: ProfileView,
             meta: { title: "Profile" },
         },

@@ -1,5 +1,5 @@
-import { RankedStatus } from "../types/maps";
-import { GetBestScores } from "../../wailsjs/go/app/App";
+import type { RankedStatus } from "../types/maps";
+import { GetBestScores, GetRecentScores } from "../../wailsjs/go/app/App";
 import { useWails } from "./useWails";
 
 interface MapInfo {
@@ -28,9 +28,9 @@ interface ScoreInfo {
 
 export interface Scores {
     ScoreID: number;
-    MapID:   number;
-    Score:   ScoreInfo;
-    Map:     MapInfo;
+    MapID: number;
+    Score: ScoreInfo;
+    Map: MapInfo;
 }
 
 export async function getBest(
@@ -38,8 +38,17 @@ export async function getBest(
     mode: number,
     page: number,
     judgement: string,
-    rank: string,
+    status: string,
     ln: number,
 ) {
     return await useWails<Scores[]>(GetBestScores, ...arguments);
+}
+
+export async function getRecent(
+    uid: number,
+    mode: number,
+    page: number,
+    failed: boolean,
+) {
+    return await useWails<Scores[]>(GetRecentScores, ...arguments);
 }

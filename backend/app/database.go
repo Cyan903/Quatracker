@@ -13,10 +13,10 @@ func (a *App) LoadDB() error {
 // Scores
 func (a *App) GetBestScores(uid, mode, page int, judgement, mstatus string, ln float64) ([]database.ScoreBoard, error) {
 	if mstatus != "" && api.RevertRankedStatus(mstatus) == -1 {
-		log.Warning.Println("invalid rank status passed:", mstatus)
+		log.Warning.Println("invalid rank status passed", mstatus)
 	}
 
-	return database.GetBestScores(uid, mode, page, "", "", ln)
+	return database.GetBestScores(uid, mode, page, judgement, mstatus, ln)
 }
 
 func (a *App) GetRecentScores(uid, mode, page int, failed bool) ([]database.ScoreBoard, error) {
