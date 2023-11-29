@@ -13,6 +13,7 @@
                 <slot></slot>
 
                 <div class="modal-action">
+                    <slot name="actions"></slot>
                     <button @click="$emit('hide')" class="btn">Close</button>
                 </div>
             </div>
