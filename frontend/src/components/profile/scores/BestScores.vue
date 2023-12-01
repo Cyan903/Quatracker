@@ -85,7 +85,7 @@ import { getJudgements } from "../../../use/useUsers";
 
 import DelayedRange from "../../util/DelayedRange.vue";
 import ModalItem from "../../util/ModalItem.vue";
-import ScoreItem from "./ScoreItem.vue";
+import ScoreItem from "./display/ScoreItem.vue";
 
 const cfg = useConfigStore();
 const toast = useToast();

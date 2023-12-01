@@ -137,8 +137,6 @@ func GetBestScores(
 		optionalLNPercent = "AND LN >= ?"
 	}
 
-	// Not the cleanest solution, but I don't see a point in using
-	// a query builder for a single function.
 	query := fmt.Sprintf(`
 		SELECT
 			Score.Id as SID,

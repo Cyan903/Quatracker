@@ -27,7 +27,7 @@ func (a *App) GetConfig() config.Config {
 	return config.Data
 }
 
-func (a *App) SetGamePath(path string) error { 
+func (a *App) SetGamePath(path string) error {
 	cfg, err := ccopy(&config.Data)
 
 	if err != nil {
@@ -45,3 +45,5 @@ func (a *App) SetGamePath(path string) error {
 
 	return config.WriteConfig(string(js))
 }
+
+// TODO: Add main gamemode to config.json

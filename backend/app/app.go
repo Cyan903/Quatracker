@@ -2,8 +2,6 @@ package app
 
 import (
 	"context"
-
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/images"
 )
 
 type App struct {
@@ -16,5 +14,4 @@ func NewApp() *App {
 
 func (a *App) Startup(ctx context.Context) {
 	a.ctx = ctx
-	images.Serve(3000)
 }
