@@ -3,9 +3,6 @@ import { GetBestScores, GetRecentScores } from "../../wailsjs/go/app/App";
 import { useWails } from "./useWails";
 
 interface MapInfo {
-    Directory: string;
-    Path: string;
-    BackgroundPath: string;
     Artist: string;
     Title: string;
     DifficultyName: string;

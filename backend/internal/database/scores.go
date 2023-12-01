@@ -26,15 +26,13 @@ type ScoreBoard struct {
 	}
 
 	Map struct {
-		Directory      string
-		Path           string
-		BackgroundPath string
 		Artist         string
 		Title          string
 		DifficultyName string
 		Creator        string
 		RankedStatus   string
 		LNPercent      float64
+		Rating         float64
 	}
 }
 
@@ -83,9 +81,6 @@ type ScoreDetails struct {
 	}
 
 	Map struct {
-		Directory      string
-		Path           string
-		BackgroundPath string
 		Artist         string
 		Title          string
 		DifficultyName string
@@ -145,10 +140,10 @@ func GetBestScores(
 			Score.Mods, Score.PerformanceRating, Score.JudgementWindowPreset,
 
 			Map.Id as MID,
-			Map.Directory, Map.Path,
-			Map.BackgroundPath, Map.Artist, Map.Title,
+			Map.Artist, Map.Title,
 			Map.DifficultyName, Map.Creator, Map.RankedStatus,
-			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN
+			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
+			Map.Difficulty10x
 		FROM Score join Map WHERE Score.MapMd5 = Map.Md5Checksum AND
 			Map.Mode = ? AND
 			Score.LocalProfileID = ? AND
@@ -195,9 +190,8 @@ func GetBestScores(
 			&score.Score.Mods, &score.Score.PerformanceRating, &score.Score.JudgementWindowPreset,
 
 			&score.MapID,
-			&score.Map.Directory, &score.Map.Path,
-			&score.Map.BackgroundPath, &score.Map.Artist, &score.Map.Title, &score.Map.DifficultyName,
-			&score.Map.Creator, &status, &score.Map.LNPercent,
+			&score.Map.Artist, &score.Map.Title, &score.Map.DifficultyName,
+			&score.Map.Creator, &status, &score.Map.LNPercent, &score.Map.Rating,
 		); err != nil {
 			log.Error.Println("could not scan GetBestScores", err)
 
@@ -237,10 +231,10 @@ func GetRecentScores(
 			Score.Mods, Score.PerformanceRating, Score.JudgementWindowPreset,
 
 			Map.Id as MID,
-			Map.Directory, Map.Path,
-			Map.BackgroundPath, Map.Artist, Map.Title,
+			Map.Artist, Map.Title,
 			Map.DifficultyName, Map.Creator, Map.RankedStatus,
-			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN
+			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
+			Map.Difficulty10x
 		FROM Score join Map WHERE Score.MapMd5 = Map.Md5Checksum AND
 			Map.Mode = ? AND
 			Score.LocalProfileID = ? AND
@@ -267,9 +261,8 @@ func GetRecentScores(
 			&score.Score.Mods, &score.Score.PerformanceRating, &score.Score.JudgementWindowPreset,
 
 			&score.MapID,
-			&score.Map.Directory, &score.Map.Path,
-			&score.Map.BackgroundPath, &score.Map.Artist, &score.Map.Title, &score.Map.DifficultyName,
-			&score.Map.Creator, &status, &score.Map.LNPercent,
+			&score.Map.Artist, &score.Map.Title, &score.Map.DifficultyName,
+			&score.Map.Creator, &status, &score.Map.LNPercent, &score.Map.Rating,
 		); err != nil {
 			log.Error.Println("could not scan GetRecentScores", err)
 
@@ -302,7 +295,7 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 			Score.JudgementWindowOkay, Score.JudgementWindowMiss, Score.RankedAccuracy,
 
 			Map.Id as MID,
-			Map.Directory, Map.Path, Map.BackgroundPath, Map.Artist, Map.Title, Map.DifficultyName, Map.Creator, Map.RankedStatus,
+			Map.Artist, Map.Title, Map.DifficultyName, Map.Creator, Map.RankedStatus,
 			Map.SongLength, Map.Bpm, Map.DifficultyProcessorVersion,
 			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
 			Map.HasScratchKey, Map.Difficulty10x
@@ -324,7 +317,7 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 		&details.Score.JudgementConfig.CountOkay, &details.Score.JudgementConfig.CountMiss, &details.Score.JudgedHits.RankedAccuracy,
 
 		&details.MapID,
-		&details.Map.Directory, &details.Map.Path, &details.Map.BackgroundPath, &details.Map.Artist, &details.Map.Title, &details.Map.DifficultyName, &details.Map.Creator, &status,
+		&details.Map.Artist, &details.Map.Title, &details.Map.DifficultyName, &details.Map.Creator, &status,
 		&details.Map.DifficultyInfo.SongLength, &details.Map.DifficultyInfo.BPM, &details.Map.ModeInfo.DifficultyProcessorVersion,
 		&details.Map.DifficultyInfo.LNPercent,
 		&details.Map.ModeInfo.HasScratchKey, &details.Map.DifficultyInfo.Rating,
