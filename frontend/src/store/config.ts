@@ -2,7 +2,7 @@ import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 
-import { GetConfig, LoadDB, SetGamePath } from "../../wailsjs/go/app/App";
+import { GetConfig, LoadDB, SetGamePath, SetMainMode } from "../../wailsjs/go/app/App";
 import { LogInfo } from "../../wailsjs/runtime/runtime";
 import { config } from "../../wailsjs/go/models";
 import { useWails } from "../use/useWails";
@@ -13,6 +13,7 @@ export const useConfigStore = defineStore("config", () => {
     const err = ref(true);
     const data = ref<config.Config>({
         GamePath: "",
+        MainMode: false,
     });
 
     // TODO: Improve
@@ -26,6 +27,20 @@ export const useConfigStore = defineStore("config", () => {
         if (game.error) {
             err.value = true;
             toast.error("Could not set game path!");
+
+            return true;
+        }
+
+        await refresh();
+        return err.value;
+    };
+
+    const setMainMode = async (mode: boolean): Promise<boolean> => {
+        const main = await useWails(SetMainMode, mode);
+
+        if (main.error) {
+            err.value = true;
+            toast.error("Could not set main mode!");
 
             return true;
         }
@@ -70,7 +85,9 @@ export const useConfigStore = defineStore("config", () => {
     return {
         data,
         validConfig,
+
         refresh,
         setGamePath,
+        setMainMode,
     };
 });

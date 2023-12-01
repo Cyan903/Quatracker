@@ -2,7 +2,6 @@ package config
 
 import (
 	"encoding/json"
-	"errors"
 	"os"
 
 	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
@@ -11,10 +10,10 @@ import (
 
 type Config struct {
 	GamePath string `json:"GamePath"`
+	MainMode bool   `json:"MainMode"`
 }
 
 var cfgpath = "QuaverBuddy/config.json"
-var ErrMissingItem = errors.New("missing field")
 var Data Config
 
 func CreateConfig() string {
@@ -80,7 +79,7 @@ func WriteConfig(cfg string) error {
 	cjson := Config{}
 	cpath, cerr := xdg.SearchConfigFile(cfgpath)
 
-	// Find file, validate JSON
+	// Find file
 	if err := json.Unmarshal([]byte(cfg), &cjson); err != nil {
 		log.Error.Println("invalid json", err)
 		return err
@@ -91,9 +90,10 @@ func WriteConfig(cfg string) error {
 		os.Exit(1)
 	}
 
-	if cjson.GamePath == "" {
-		log.Error.Println("json missing field")
-		return ErrMissingItem
+	// Validate
+	if err := validate(cjson); err != nil {
+		log.Error.Println("validate error", err)
+		return err
 	}
 
 	// Write to config, update data
