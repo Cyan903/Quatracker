@@ -76,11 +76,12 @@
 </template>
 
 <script lang="ts" setup>
+import type { Scores } from "../../../types/scores";
 import { ref, reactive, watch, onMounted, computed } from "vue";
 import { useToast } from "vue-toastification";
 
 import { useConfigStore } from "../../../store/config";
-import { Scores, getBest } from "../../../use/useScores";
+import { getBest } from "../../../use/useScores";
 import { getJudgements } from "../../../use/useUsers";
 
 import DelayedRange from "../../util/DelayedRange.vue";

@@ -1,7 +1,6 @@
 <template>
     <PageNotAvailable v-if="!cfg.validConfig" />
     <div v-else>
-        <pre>{{ cfg.data.MainMode }}</pre>
         <div>
             <UserSwitcher
                 :id="user.id"
@@ -17,6 +16,12 @@
         </div>
 
         <div v-if="user.id != -1">
+            <DetailPopup
+                :id="scoreDetailID"
+                :open="detailOpen"
+                @hide="detailOpen = false"
+            />
+  
             <BestScores :id="user.id" :mode="mode" />
         </div>
         <h4 v-else>No users were found.</h4>
@@ -24,18 +29,22 @@
 </template>
 
 <script lang="ts" setup>
-import { onMounted, reactive, ref, watch } from "vue";
+import { onMounted, provide, reactive, ref, watch } from "vue";
 import { useConfigStore } from "../store/config";
 
 import PageNotAvailable from "../components/config/PageNotAvailable.vue";
+import DetailPopup from "../components/profile/DetailPopup.vue";
 
-import UserSwitcher from "../components/profile/UserSwitcher.vue";
-import ModeSwitcher from "../components/profile/ModeSwitcher.vue";
+import UserSwitcher from "../components/profile/switcher/UserSwitcher.vue";
+import ModeSwitcher from "../components/profile/switcher/ModeSwitcher.vue";
 
 import BestScores from "../components/profile/scores/BestScores.vue";
+// TODO: RecentScores
 
 const cfg = useConfigStore();
 const mode = ref(false);
+const scoreDetailID = ref(0);
+const detailOpen = ref(false);
 const user = reactive({
     id: -1,
     username: "",
@@ -51,6 +60,16 @@ const setMode = () => {
         mode.value = cfg.data.MainMode;
     }
 };
+
+const setDetailId = (id: number) => {
+    detailOpen.value = true;
+    scoreDetailID.value = id;
+};
+
+provide("scoreDetail", {
+    scoreDetailID,
+    setDetailId,
+});
 
 onMounted(setMode);
 watch(() => cfg.data.MainMode, setMode);

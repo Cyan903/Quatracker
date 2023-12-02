@@ -27,14 +27,7 @@ const cfg = useConfigStore();
 const toast = useToast();
 const path = ref("");
 
-const invalid = computed(() => {
-    // TODO: Better path checks
-    if (path.value.length === 0) {
-        return true;
-    }
-
-    return false;
-});
+const invalid = computed(() => path.value.length === 0);
 
 const setPath = async () => {
     const pathTest = await cfg.setGamePath(path.value);

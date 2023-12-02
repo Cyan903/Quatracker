@@ -16,7 +16,6 @@ export const useConfigStore = defineStore("config", () => {
         MainMode: false,
     });
 
-    // TODO: Improve
     const validConfig = computed(() => {
         return !err.value;
     });
