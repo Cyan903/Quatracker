@@ -1,0 +1,31 @@
+.difficulty-beginner {
+    color: #d1fffa;
+}
+
+.difficulty-easy {
+    color: #5eff75;
+}
+
+.difficulty-normal {
+    color: #5ec4ff;
+}
+
+.difficulty-hard {
+    color: #f5b25b;
+}
+
+.difficulty-insane {
+    color: #f9645d;
+}
+
+.difficulty-expert {
+    color: #d761eb;
+}
+
+.difficulty-extreme {
+    color: #7b61eb;
+}
+
+.difficulty-master {
+    color: #b7b7b7;
+}

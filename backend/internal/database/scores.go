@@ -14,9 +14,7 @@ type ScoreBoard struct {
 	MapID   int
 
 	Score struct {
-		Name                  string
 		DateTime              string
-		TotalScore            int
 		Grade                 string
 		Accuracy              float64
 		RankedAccuracy        float64
@@ -135,8 +133,7 @@ func GetBestScores(
 	query := fmt.Sprintf(`
 		SELECT
 			Score.Id as SID,
-			Score.Name, Score.DateTime, Score.TotalScore,
-			Score.Grade, Score.Accuracy, Score.RankedAccuracy,
+			Score.DateTime, Score.Grade, Score.Accuracy, Score.RankedAccuracy,
 			Score.Mods, Score.PerformanceRating, Score.JudgementWindowPreset,
 
 			Map.Id as MID,
@@ -185,8 +182,7 @@ func GetBestScores(
 
 		if err := row.Scan(
 			&score.ScoreID,
-			&score.Score.Name, &score.Score.DateTime, &score.Score.TotalScore,
-			&grade, &score.Score.Accuracy, &score.Score.RankedAccuracy,
+			&score.Score.DateTime, &grade, &score.Score.Accuracy, &score.Score.RankedAccuracy,
 			&score.Score.Mods, &score.Score.PerformanceRating, &score.Score.JudgementWindowPreset,
 
 			&score.MapID,
@@ -226,8 +222,7 @@ func GetRecentScores(
 	row, err := Conn.QueryContext(c, `
 		SELECT
 			Score.Id as SID,
-			Score.Name, Score.DateTime, Score.TotalScore,
-			Score.Grade, Score.Accuracy, Score.RankedAccuracy,
+			Score.DateTime, Score.Grade, Score.Accuracy, Score.RankedAccuracy,
 			Score.Mods, Score.PerformanceRating, Score.JudgementWindowPreset,
 
 			Map.Id as MID,
@@ -256,8 +251,7 @@ func GetRecentScores(
 
 		if err := row.Scan(
 			&score.ScoreID,
-			&score.Score.Name, &score.Score.DateTime, &score.Score.TotalScore,
-			&grade, &score.Score.Accuracy, &score.Score.RankedAccuracy,
+			&score.Score.DateTime, &grade, &score.Score.Accuracy, &score.Score.RankedAccuracy,
 			&score.Score.Mods, &score.Score.PerformanceRating, &score.Score.JudgementWindowPreset,
 
 			&score.MapID,

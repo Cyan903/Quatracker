@@ -1,1 +1,5 @@
 @import "./base.css";
+
+@import "./scores/difficulty.css";
+@import "./scores/grade.css";
+@import "./scores/rank.css";

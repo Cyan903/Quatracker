@@ -2,7 +2,6 @@
     <div v-if="score && score.ScoreID">
         <ModalItem :show="open" @hide="emits('hide')">
             <template #default>
-                <BackgroundMap v-if="loaded" :id="score.MapID" />
                 <h4>{{ props.id }}</h4>
                 <pre>{{ score }}</pre>
             </template>
@@ -14,10 +13,8 @@
 import type { ScoreDetails } from "../../types/scores";
 import { ref, watch } from "vue";
 import { useToast } from "vue-toastification";
-
 import { getDetails } from "../../use/useScores";
 
-import BackgroundMap from "./scores/display/BackgroundMap.vue";
 import ModalItem from "../util/ModalItem.vue";
 
 const props = defineProps<{

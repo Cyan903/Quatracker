@@ -9,7 +9,7 @@ func ConvertGrade(accuracy float64, grade int) string {
 	if accuracy == 100 {
 		return "X"
 	} else if accuracy >= 99.0 {
-		return "S+"
+		return "SS"
 	} else if accuracy >= 95.0 {
 		return "S"
 	} else if accuracy >= 90.0 {

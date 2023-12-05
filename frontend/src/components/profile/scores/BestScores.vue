@@ -8,7 +8,7 @@
                     v-model="options.judgement"
                 >
                     <option selected value="">Judgement preset (any)</option>
-                    <option v-for="judge in judges" :key="judge">
+                    <option v-for="judge in judges" :key="judge" :value="judge">
                         {{ judge }}
                     </option>
                 </select>
@@ -50,19 +50,20 @@
             </template>
         </ModalItem>
 
-        <div>
-            <h4 class="font-bold text-md">Best Scores</h4>
+        <div class="flex">
+            <h4 class="font-bold text-2xl">Best Scores</h4>
             <button class="btn" @click="showModal">Settings</button>
         </div>
+
         <div>
             <h4 v-if="noScores" class="text-center my-4">No scores found!</h4>
-            <template v-else>
+            <div v-else class="px-4">
                 <ScoreItem
                     v-for="score in scores"
                     :key="score.ScoreID"
                     :score="score"
                 />
-            </template>
+            </div>
 
             <button
                 :disabled="noScores"
@@ -174,6 +175,7 @@ const reset = () => {
     page.value = 0;
 
     best();
+    judgements();
 };
 
 const paginate = () => {

@@ -5,9 +5,7 @@ export interface Scores {
     ScoreID: number;
     MapID: number;
     Score: {
-        Name: string;
         DateTime: string;
-        TotalScore: number;
         Grade: string;
         Accuracy: number;
         RankedAccuracy: number;
@@ -23,6 +21,7 @@ export interface Scores {
         Creator: string;
         RankedStatus: RankedStatus;
         LNPercent: number;
+        Rating: number;
     };
 }
 
