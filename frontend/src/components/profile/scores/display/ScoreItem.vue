@@ -132,7 +132,8 @@ const fullTitle = computed(
 );
 
 const time = computed(() => {
-    return moment(props.score.Score.DateTime).fromNow();
+    const d = new Date(props.score.Score.DateTime);
+    return moment(d).fromNow();
 });
 
 // TODO: Convert mods
