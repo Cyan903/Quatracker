@@ -21,7 +21,7 @@
                 :open="detailOpen"
                 @hide="detailOpen = false"
             />
-  
+
             <BestScores :id="user.id" :mode="mode" />
         </div>
         <h4 v-else>No users were found.</h4>

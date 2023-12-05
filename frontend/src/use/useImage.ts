@@ -1,4 +1,4 @@
-import placeholder from "../assets/images/placeholder-bg.png"
+import placeholder from "@/assets/images/placeholder-bg.png?url";
 
 export async function useImage(id: number) {
     const req = await fetch(`/id/${id}.id`)
