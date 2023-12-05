@@ -4,7 +4,7 @@
         class="dropdown w-full"
         :class="{ 'dropdown-open': open }"
     >
-        <div class="btn" @click="getUsers(true)">
+        <div class="btn" @click="usersFetch(true)">
             {{ props.id }} - {{ props.username }}
         </div>
 
@@ -32,11 +32,10 @@
 </template>
 
 <script lang="ts" setup>
+import type { UsersList } from "@/use/useUsers";
 import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
-
-import { useWails } from "@/use/useWails";
-import { GetUsers } from "@/../wailsjs/go/app/App";
+import { getUsers } from "@/use/useUsers"; 
 
 const emits = defineEmits<{
     (e: "setUser", id: number, name: string): void;
@@ -47,24 +46,12 @@ const props = defineProps<{
     username: string;
 }>();
 
-interface UsersList {
-    Local: {
-        Id: string;
-        Username: string;
-    }[];
-
-    Unknown: {
-        Id: string;
-        Username: string;
-    }[];
-}
-
 const toast = useToast();
 const open = ref(false);
 const list = ref<UsersList>({ Local: [], Unknown: [] });
 
-const getUsers = async (toggle: boolean) => {
-    const data = await useWails<UsersList>(GetUsers);
+const usersFetch = async (toggle: boolean) => {
+    const data = await getUsers();
     const none = { Local: [], Unknown: [] };
 
     if (toggle) {
@@ -83,7 +70,7 @@ const getUsers = async (toggle: boolean) => {
 
 const initUsers = async () => {
     emits("setUser", -1, "");
-    await getUsers(false);
+    await usersFetch(false);
 
     if (!list.value.Local?.length && !list.value.Unknown?.length) {
         toast.error("No users found!");

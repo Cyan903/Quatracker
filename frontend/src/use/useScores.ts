@@ -3,7 +3,7 @@ import {
     GetBestScores,
     GetRecentScores,
     GetScoreDetails,
-} from "@/../wailsjs/go/app/App";
+} from "@wails/go/app/App";
 import { useWails } from "@/use/useWails";
 
 export async function getBest(
