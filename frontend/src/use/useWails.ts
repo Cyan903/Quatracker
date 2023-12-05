@@ -1,4 +1,4 @@
-import { LogError } from "../../wailsjs/runtime/runtime";
+import { LogError } from "@/../wailsjs/runtime/runtime";
 
 export async function useWails<Type>(
     func: Function,

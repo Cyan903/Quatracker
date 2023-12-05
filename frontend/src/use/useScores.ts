@@ -1,10 +1,10 @@
-import type { ScoreDetails, Scores } from "../types/scores";
+import type { ScoreDetails, Scores } from "@/types/scores";
 import {
     GetBestScores,
     GetRecentScores,
     GetScoreDetails,
-} from "../../wailsjs/go/app/App";
-import { useWails } from "./useWails";
+} from "@/../wailsjs/go/app/App";
+import { useWails } from "@/use/useWails";
 
 export async function getBest(
     uid: number,

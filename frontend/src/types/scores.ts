@@ -1,4 +1,4 @@
-import type { RankedStatus } from "./maps";
+import type { RankedStatus } from "@/types/maps";
 
 // Scores
 export interface Scores {

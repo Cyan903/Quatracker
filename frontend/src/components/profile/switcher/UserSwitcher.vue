@@ -35,8 +35,8 @@
 import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 
-import { useWails } from "../../../use/useWails";
-import { GetUsers } from "../../../../wailsjs/go/app/App";
+import { useWails } from "@/use/useWails";
+import { GetUsers } from "@/../wailsjs/go/app/App";
 
 const emits = defineEmits<{
     (e: "setUser", id: number, name: string): void;

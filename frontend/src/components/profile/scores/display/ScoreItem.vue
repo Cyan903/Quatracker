@@ -109,11 +109,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { Scores } from "../../../../types/scores";
+import type { Scores } from "@/types/scores";
 import type { Ref } from "vue";
 import { inject, onMounted, ref, computed } from "vue";
-import { useDifficulty, useRank } from "../../../../use/useColors";
-import { useImage } from "../../../../use/useImage";
+import { useDifficulty, useRank } from "@/use/useColors";
+import { useImage } from "@/use/useImage";
 
 import moment from "moment";
 

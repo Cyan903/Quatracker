@@ -1,4 +1,4 @@
-import type { RankedStatus } from "../types/maps";
+import type { RankedStatus } from "@/types/maps";
 
 // https://github.com/Quaver/Quaver.Website/blob/edc5c05fb344f3a34c553d33bd86c32457e4d075/src/utils/ColorHelper.ts#L1
 export function useDifficulty(diff: number) {

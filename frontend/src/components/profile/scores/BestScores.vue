@@ -77,17 +77,17 @@
 </template>
 
 <script lang="ts" setup>
-import type { Scores } from "../../../types/scores";
+import type { Scores } from "@/types/scores";
 import { ref, reactive, watch, onMounted, computed } from "vue";
 import { useToast } from "vue-toastification";
 
-import { useConfigStore } from "../../../store/config";
-import { getBest } from "../../../use/useScores";
-import { getJudgements } from "../../../use/useUsers";
+import { useConfigStore } from "@/store/config";
+import { getBest } from "@/use/useScores";
+import { getJudgements } from "@/use/useUsers";
 
-import DelayedRange from "../../util/DelayedRange.vue";
-import ModalItem from "../../util/ModalItem.vue";
-import ScoreItem from "./display/ScoreItem.vue";
+import DelayedRange from "@/components/util/DelayedRange.vue";
+import ModalItem from "@/components/util/ModalItem.vue";
+import ScoreItem from "@/components/profile/scores/display/ScoreItem.vue";
 
 const cfg = useConfigStore();
 const toast = useToast();
