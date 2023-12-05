@@ -4,4 +4,7 @@ export enum RankedStatus {
     Ranked = "Ranked",
     Unranked = "Unranked",
     DanCourse = "Dan Course",
+
+    // Possible response
+    Unknown = "Unknown",
 }

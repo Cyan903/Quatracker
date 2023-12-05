@@ -79,7 +79,7 @@
                 class="text-xs opacity-80 text-[0.6em] md:mt-2"
                 :title="score.Score.DateTime"
             >
-                {{ score.Score.DateTime }}
+                {{ time }}
             </h4>
         </div>
 
@@ -111,8 +111,10 @@
 <script lang="ts" setup>
 import type { Scores } from "../../../../types/scores";
 import { Ref, inject, onMounted, ref, computed } from "vue";
-import { useImage } from "../../../../use/useImage";
 import { useDifficulty, useRank } from "../../../../use/useColors";
+import { useImage } from "../../../../use/useImage";
+
+import moment from "moment";
 
 interface Detail {
     scoreDetailID: Ref<number>;
@@ -127,6 +129,10 @@ const fullTitle = computed(
     () =>
         `${props.score.Map.Artist} - ${props.score.Map.Title} [${props.score.Map.DifficultyName}] (${props.score.Map.Creator})`,
 );
+
+const time = computed(() => {
+    return moment(props.score.Score.DateTime).fromNow();
+});
 
 // TODO: Convert mods
 const mods = computed(() => {
@@ -158,4 +164,3 @@ tr {
     border-radius: 10px;
 }
 </style>
-../../../../use/useColors
