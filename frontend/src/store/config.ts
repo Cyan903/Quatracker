@@ -2,10 +2,10 @@ import { defineStore } from "pinia";
 import { computed, onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 
-import { GetConfig, LoadDB, SetGamePath, SetMainMode } from "../../wailsjs/go/app/App";
-import { LogInfo } from "../../wailsjs/runtime/runtime";
-import { config } from "../../wailsjs/go/models";
-import { useWails } from "../use/useWails";
+import { useWails } from "@/use/useWails";
+import { LogInfo } from "@wails/runtime/runtime";
+import { config } from "@wails/go/models";
+import { GetConfig, LoadDB, SetGamePath, SetMainMode } from "@wails/go/app/App";
 
 const toast = useToast();
 

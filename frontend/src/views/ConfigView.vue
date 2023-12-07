@@ -8,6 +8,6 @@
 </template>
 
 <script lang="ts" setup>
-import GamePathItem from "../components/config/GamePathItem.vue";
-import MainModeItem from "../components/config/MainModeItem.vue";
+import GamePathItem from "@/components/config/GamePathItem.vue";
+import MainModeItem from "@/components/config/MainModeItem.vue";
 </script>

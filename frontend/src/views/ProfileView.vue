@@ -21,7 +21,7 @@
                 :open="detailOpen"
                 @hide="detailOpen = false"
             />
-  
+
             <BestScores :id="user.id" :mode="mode" />
         </div>
         <h4 v-else>No users were found.</h4>
@@ -30,15 +30,15 @@
 
 <script lang="ts" setup>
 import { onMounted, provide, reactive, ref, watch } from "vue";
-import { useConfigStore } from "../store/config";
+import { useConfigStore } from "@/store/config";
 
-import PageNotAvailable from "../components/config/PageNotAvailable.vue";
-import DetailPopup from "../components/profile/DetailPopup.vue";
+import PageNotAvailable from "@/components/config/PageNotAvailable.vue";
+import DetailPopup from "@/components/profile/DetailPopup.vue";
 
-import UserSwitcher from "../components/profile/switcher/UserSwitcher.vue";
-import ModeSwitcher from "../components/profile/switcher/ModeSwitcher.vue";
+import UserSwitcher from "@/components/profile/switcher/UserSwitcher.vue";
+import ModeSwitcher from "@/components/profile/switcher/ModeSwitcher.vue";
 
-import BestScores from "../components/profile/scores/BestScores.vue";
+import BestScores from "@/components/profile/scores/BestScores.vue";
 // TODO: RecentScores
 
 const cfg = useConfigStore();

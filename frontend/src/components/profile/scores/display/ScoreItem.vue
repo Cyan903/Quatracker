@@ -109,10 +109,11 @@
 </template>
 
 <script lang="ts" setup>
-import type { Scores } from "../../../../types/scores";
-import { Ref, inject, onMounted, ref, computed } from "vue";
-import { useDifficulty, useRank } from "../../../../use/useColors";
-import { useImage } from "../../../../use/useImage";
+import type { Scores } from "@/types/scores";
+import type { Ref } from "vue";
+import { inject, onMounted, ref, computed } from "vue";
+import { useDifficulty, useRank } from "@/use/useColors";
+import { useImage } from "@/use/useImage";
 
 import moment from "moment";
 
@@ -131,7 +132,8 @@ const fullTitle = computed(
 );
 
 const time = computed(() => {
-    return moment(props.score.Score.DateTime).fromNow();
+    const d = new Date(props.score.Score.DateTime);
+    return moment(d).fromNow();
 });
 
 // TODO: Convert mods

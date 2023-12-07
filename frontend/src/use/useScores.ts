@@ -1,10 +1,10 @@
-import type { ScoreDetails, Scores } from "../types/scores";
+import type { ScoreDetails, Scores } from "@/types/scores";
 import {
     GetBestScores,
     GetRecentScores,
     GetScoreDetails,
-} from "../../wailsjs/go/app/App";
-import { useWails } from "./useWails";
+} from "@wails/go/app/App";
+import { useWails } from "@/use/useWails";
 
 export async function getBest(
     uid: number,
@@ -14,7 +14,15 @@ export async function getBest(
     status: string,
     ln: number,
 ) {
-    return await useWails<Scores[]>(GetBestScores, ...arguments);
+    return await useWails<Scores[]>(
+        GetBestScores,
+        uid,
+        mode,
+        page,
+        judgement,
+        status,
+        ln,
+    );
 }
 
 export async function getRecent(
@@ -23,7 +31,7 @@ export async function getRecent(
     page: number,
     failed: boolean,
 ) {
-    return await useWails<Scores[]>(GetRecentScores, ...arguments);
+    return await useWails<Scores[]>(GetRecentScores, uid, mode, page, failed);
 }
 
 export async function getDetails(id: number) {

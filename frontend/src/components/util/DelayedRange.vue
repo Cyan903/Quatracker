@@ -8,7 +8,7 @@
 </template>
 
 <script lang="ts" setup>
-let timer = 0;
+let timer: number = 0;
 
 defineProps<{
     modelValue: number;

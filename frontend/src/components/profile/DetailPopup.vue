@@ -10,12 +10,12 @@
 </template>
 
 <script lang="ts" setup>
-import type { ScoreDetails } from "../../types/scores";
+import type { ScoreDetails } from "@/types/scores";
 import { ref, watch } from "vue";
 import { useToast } from "vue-toastification";
-import { getDetails } from "../../use/useScores";
+import { getDetails } from "@/use/useScores";
 
-import ModalItem from "../util/ModalItem.vue";
+import ModalItem from "@/components/util/ModalItem.vue";
 
 const props = defineProps<{
     id: number;

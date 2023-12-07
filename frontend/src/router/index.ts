@@ -1,8 +1,8 @@
 import { createRouter, createWebHistory } from "vue-router";
 
-import ProfileView from "../views/ProfileView.vue";
-import ConfigView from "../views/ConfigView.vue";
-import NotFoundView from "../views/404View.vue";
+import ProfileView from "@/views/ProfileView.vue";
+import ConfigView from "@/views/ConfigView.vue";
+import NotFoundView from "@/views/404View.vue";
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),

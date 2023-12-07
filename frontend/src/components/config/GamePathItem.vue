@@ -21,7 +21,7 @@
 <script lang="ts" setup>
 import { computed, onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
-import { useConfigStore } from "../../store/config";
+import { useConfigStore } from "@/store/config";
 
 const cfg = useConfigStore();
 const toast = useToast();
