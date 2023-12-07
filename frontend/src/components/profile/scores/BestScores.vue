@@ -50,28 +50,53 @@
             </template>
         </ModalItem>
 
-        <div class="flex">
-            <h4 class="font-bold text-2xl">Best Scores</h4>
-            <button class="btn" @click="showModal">Settings</button>
+        <div class="divider">
+            <StarIcon class="w-[2rem] h-[2rem]" />
+            <span class="font-bold">Best Scores</span>
+        </div>
+
+        <div
+            class="flex lg:max-w-[800px] lg:mx-auto justify-between align-middle"
+        >
+            <div class="text-xs">
+                <span class="font-bold">Total Scores:</span>
+                <span>
+                    {{ noScores ? " ? " : " 200 " }}
+                </span>
+            </div>
+
+            <Cog6ToothIcon
+                v-if="noScores"
+                class="w-[1rem] h-[1rem] opacity-60"
+            />
+            <Cog6ToothIcon
+                v-else
+                class="w-[1rem] h-[1rem] hover:opacity-60 active:opacity-80"
+                @click="showModal"
+            />
         </div>
 
         <div>
-            <h4 v-if="noScores" class="text-center my-4">No scores found!</h4>
-            <div v-else class="px-4">
+            <h4 v-if="noScores" class="text-center my-[100px]">
+                No scores found!
+            </h4>
+            <template v-else>
                 <ScoreItem
                     v-for="score in scores"
                     :key="score.ScoreID"
                     :score="score"
                 />
-            </div>
 
-            <button
-                :disabled="noScores"
-                class="btn btn-secondary"
-                @click="paginate"
-            >
-                Load
-            </button>
+                <div class="text-center">
+                    <button
+                        :disabled="noScores"
+                        class="btn btn-primary btn-outline max-md:w-full w-[50%] md:max-w-[700px]"
+                        @click="paginate"
+                    >
+                        Load
+                    </button>
+                </div>
+            </template>
         </div>
     </div>
 </template>
@@ -82,8 +107,10 @@ import { ref, reactive, watch, onMounted, computed } from "vue";
 import { useToast } from "vue-toastification";
 
 import { useConfigStore } from "@/store/config";
-import { getBest } from "@/use/useScores";
+import { getBest, getRecent } from "@/use/useScores";
 import { getJudgements } from "@/use/useUsers";
+
+import { StarIcon, Cog6ToothIcon } from "@heroicons/vue/24/solid";
 
 import DelayedRange from "@/components/util/DelayedRange.vue";
 import ModalItem from "@/components/util/ModalItem.vue";
@@ -120,18 +147,24 @@ const noScores = computed(() => {
 });
 
 const best = async () => {
-    const data = await getBest(
-        props.id,
-        gamemode.value,
-        page.value,
-        options.judgement,
-        options.status,
-        lnPercent.value,
-    );
+    // const data = await getBest(
+    //     props.id,
+    //     gamemode.value,
+    //     page.value,
+    //     options.judgement,
+    //     options.status,
+    //     lnPercent.value,
+    // );
+
+    const data = await getRecent(props.id, gamemode.value, page.value, false);
 
     if (data.error) {
         toast.error("Could not get best scores!");
         return;
+    }
+
+    if (!data.result) {
+        toast.error("Reached end of scores listing!");
     }
 
     scores.value = [...scores.value, ...(data.result || [])];

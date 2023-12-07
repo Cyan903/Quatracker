@@ -4,6 +4,7 @@ import type { RankedStatus } from "@/types/maps";
 export interface Scores {
     ScoreID: number;
     MapID: number;
+
     Score: {
         DateTime: string;
         Grade: string;
@@ -12,6 +13,7 @@ export interface Scores {
         Mods: string;
         PerformanceRating: number;
         JudgementWindowPreset: string;
+        PersonalBest: boolean;
     };
 
     Map: {
@@ -40,6 +42,7 @@ interface Judge {
 export interface ScoreDetails {
     ScoreID: number;
     MapID: number;
+
     Score: {
         LocalProfileId: number;
         Name: string;
@@ -55,6 +58,8 @@ export interface ScoreDetails {
         JudgementWindowPreset: string;
         JudgedHits: Judge;
         JudgementConfig: Judge;
+        PersonalBest: boolean;
+
         Versions: {
             RatingVersion: string;
             DifficultyVersion: string;
@@ -67,6 +72,7 @@ export interface ScoreDetails {
         DifficultyName: string;
         Creator: string;
         RankedStatus: RankedStatus;
+
         DifficultyInfo: {
             SongLength: number;
             BPM: number;

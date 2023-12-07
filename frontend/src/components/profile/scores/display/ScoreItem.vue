@@ -1,14 +1,21 @@
 <template>
     <div
         :style="img"
-        class="flex items-center my-4 rounded-md min-h-[80px] py-2"
+        class="flex items-center my-4 relative rounded-md lg:max-w-[800px] lg:mx-auto min-h-[80px] py-2"
     >
+        <h2
+            class="absolute top-[3px] left-[3px] px-1 font-bold text-xl"
+            title="This score is not a personal best!"
+        >
+            {{ !score.Score.PersonalBest ? "*" : "" }}
+        </h2>
+
         <div class="text-center mx-4">
             <h2
                 class="text-4xl font-bold"
                 :class="`grade-${score.Score.Grade}`"
             >
-                {{ score.Score.Grade }}
+                {{ score.Score.Grade == "SS" ? "S+" : score.Score.Grade }}
             </h2>
 
             <h4 class="text-sm font-bold mt-2 md:hidden">
@@ -141,6 +148,18 @@ const mods = computed(() => {
     return [props.score.Score.Mods];
 });
 
+const gradient = computed(() => {
+    if (props.score.Score.Grade === "F") {
+        return "50, 0, 0";
+    }
+    
+    if (!props.score.Score.PersonalBest) {
+        return "25, 25, 0"
+    }
+
+    return "0, 0, 0";
+});
+
 const shorten = (str: string, n: number) => {
     if (str.length - 3 > n) {
         return str.slice(0, n) + "...";
@@ -153,7 +172,7 @@ onMounted(async () => {
     const i = await useImage(props.score.MapID);
 
     img.value = `
-        background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("${i}");
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(${gradient.value}, 0.8)), url("${i}");
     `;
 });
 </script>

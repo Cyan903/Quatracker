@@ -21,6 +21,7 @@ type ScoreBoard struct {
 		Mods                  string
 		PerformanceRating     float64
 		JudgementWindowPreset string
+		PersonalBest          bool
 	}
 
 	Map struct {
@@ -51,6 +52,7 @@ type ScoreDetails struct {
 		PauseCount            int
 		PerformanceRating     float64
 		JudgementWindowPreset string
+		PersonalBest          bool
 
 		JudgedHits struct {
 			Accuracy       float64
@@ -109,7 +111,6 @@ func GetBestScores(
 	judgementWindowPreset string,
 	RankedStatus string,
 	LNPercent float64,
-
 ) ([]ScoreBoard, error) {
 	var scores []ScoreBoard
 
@@ -140,16 +141,16 @@ func GetBestScores(
 			Map.Artist, Map.Title,
 			Map.DifficultyName, Map.Creator, Map.RankedStatus,
 			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
-			Map.Difficulty10x
-		FROM Score join Map WHERE Score.MapMd5 = Map.Md5Checksum AND
-			Map.Mode = ? AND
-			Score.LocalProfileID = ? AND
+			Map.Difficulty10x,
 			(
-				SELECT Id from Score WHERE MapMd5 = Map.Md5Checksum
+				SELECT Id FROM Score WHERE MapMd5 = Map.Md5Checksum
 					AND Score.LocalProfileID = ? %[1]s %[2]s
-				ORDER BY PerformanceRating DESC LIMIT 1
-			) == Score.Id
-
+				ORDER BY PerformanceRating DESC, RankedAccuracy DESC LIMIT 1
+			) == Score.Id as Best
+		FROM Score join Map WHERE Score.MapMd5 = Map.Md5Checksum
+			AND Score.LocalProfileID = ?
+			AND Map.Mode = ?
+			AND Best = true
 			AND Score.Grade != 5
 			%[1]s %[2]s %[3]s
 		ORDER BY Score.PerformanceRating DESC LIMIT ?, 10;
@@ -159,13 +160,11 @@ func GetBestScores(
 	c, cancel := context.WithTimeout(context.Background(), DefaultTimeout)
 	row, err := Conn.QueryContext(
 		c, query,
-		mode, uid, uid,
+		uid, judgementWindowPreset, api.RevertRankedStatus(RankedStatus),
 
-		// Optional
-		judgementWindowPreset, api.RevertRankedStatus(RankedStatus),
-		judgementWindowPreset, api.RevertRankedStatus(RankedStatus), LNPercent,
-
-		page*DefaultPaginate,
+		// Where
+		uid, mode, judgementWindowPreset, api.RevertRankedStatus(RankedStatus),
+		LNPercent, page*DefaultPaginate,
 	)
 
 	defer cancel()
@@ -187,7 +186,7 @@ func GetBestScores(
 
 			&score.MapID,
 			&score.Map.Artist, &score.Map.Title, &score.Map.DifficultyName,
-			&score.Map.Creator, &status, &score.Map.LNPercent, &score.Map.Rating,
+			&score.Map.Creator, &status, &score.Map.LNPercent, &score.Map.Rating, &score.Score.PersonalBest,
 		); err != nil {
 			log.Error.Println("could not scan GetBestScores", err)
 
@@ -229,13 +228,18 @@ func GetRecentScores(
 			Map.Artist, Map.Title,
 			Map.DifficultyName, Map.Creator, Map.RankedStatus,
 			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
-			Map.Difficulty10x
-		FROM Score join Map WHERE Score.MapMd5 = Map.Md5Checksum AND
-			Map.Mode = ? AND
-			Score.LocalProfileID = ? AND
-			Score.Grade != ?
+			Map.Difficulty10x,
+			(
+				SELECT Id FROM Score WHERE MapMd5 = Map.Md5Checksum
+					AND Score.LocalProfileID = ?
+				ORDER BY PerformanceRating DESC, RankedAccuracy DESC LIMIT 1
+			) == Score.Id as Best
+		FROM Score join Map WHERE Score.MapMd5 = Map.Md5Checksum
+			AND Score.LocalProfileID = ?
+			AND Map.Mode = ?
+			AND Score.Grade != ?
 		ORDER BY Score.Id DESC LIMIT ?, 10;
-	`, mode, uid, failed, page*DefaultPaginate)
+	`, uid, uid, mode, failed, page*DefaultPaginate)
 
 	defer cancel()
 
@@ -256,7 +260,7 @@ func GetRecentScores(
 
 			&score.MapID,
 			&score.Map.Artist, &score.Map.Title, &score.Map.DifficultyName,
-			&score.Map.Creator, &status, &score.Map.LNPercent, &score.Map.Rating,
+			&score.Map.Creator, &status, &score.Map.LNPercent, &score.Map.Rating, &score.Score.PersonalBest,
 		); err != nil {
 			log.Error.Println("could not scan GetRecentScores", err)
 
@@ -284,15 +288,20 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 			Score.Grade, Score.Accuracy, Score.MaxCombo, Score.CountMarv,
 			Score.CountPerf, Score.CountGreat, Score.CountGood, Score.CountOkay, Score.CountMiss,
 			Score.Mods, Score.Mode, Score.ScrollSpeed, Score.PauseCount, Score.PerformanceRating,
-			Score.RatingProcessorVersion, Score.DifficultyProcessorVersion, Score.JudgementWindowPreset,
+			COALESCE(Score.RatingProcessorVersion, "Unknown"), COALESCE(Score.DifficultyProcessorVersion, "Unknown"), Score.JudgementWindowPreset,
 			Score.JudgementWindowMarv, Score.JudgementWindowPerf, Score.JudgementWindowGreat, Score.JudgementWindowGood,
 			Score.JudgementWindowOkay, Score.JudgementWindowMiss, Score.RankedAccuracy,
 
 			Map.Id as MID,
 			Map.Artist, Map.Title, Map.DifficultyName, Map.Creator, Map.RankedStatus,
-			Map.SongLength, Map.Bpm, Map.DifficultyProcessorVersion,
+			Map.SongLength, Map.Bpm, COALESCE(Map.DifficultyProcessorVersion, "Unknown"),
 			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
-			Map.HasScratchKey, Map.Difficulty10x
+			Map.HasScratchKey, Map.Difficulty10x,
+			(
+				SELECT Id FROM Score ss WHERE MapMd5 = Map.Md5Checksum
+					AND ss.LocalProfileID = Score.LocalProfileId
+				ORDER BY PerformanceRating DESC, RankedAccuracy DESC LIMIT 1
+			) == Score.Id as Best
 		FROM Score join Map WHERE 
 			Score.MapMd5 = Map.Md5Checksum AND
 			Score.Id = ?
@@ -314,7 +323,7 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 		&details.Map.Artist, &details.Map.Title, &details.Map.DifficultyName, &details.Map.Creator, &status,
 		&details.Map.DifficultyInfo.SongLength, &details.Map.DifficultyInfo.BPM, &details.Map.ModeInfo.DifficultyProcessorVersion,
 		&details.Map.DifficultyInfo.LNPercent,
-		&details.Map.ModeInfo.HasScratchKey, &details.Map.DifficultyInfo.Rating,
+		&details.Map.ModeInfo.HasScratchKey, &details.Map.DifficultyInfo.Rating, &details.Score.PersonalBest,
 	); err != nil && err != sql.ErrNoRows {
 		log.Error.Println("could not scan GetScoreDetails", err)
 		return details, err

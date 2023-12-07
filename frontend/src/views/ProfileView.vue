@@ -22,7 +22,9 @@
                 @hide="detailOpen = false"
             />
 
-            <BestScores :id="user.id" :mode="mode" />
+            <div class="px-4">
+                <BestScores :id="user.id" :mode="mode" />
+            </div>
         </div>
         <h4 v-else>No users were found.</h4>
     </div>

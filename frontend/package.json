@@ -13,6 +13,7 @@
         "format": "prettier --write src/"
     },
     "dependencies": {
+        "@heroicons/vue": "^2.0.18",
         "daisyui": "^3.9.4",
         "moment": "^2.29.4",
         "pinia": "^2.1.7",
