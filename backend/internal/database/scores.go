@@ -35,6 +35,11 @@ type ScoreBoard struct {
 	}
 }
 
+type CountedScoreBoard struct {
+	Total  int
+	Scores []ScoreBoard
+}
+
 type ScoreDetails struct {
 	ScoreID int
 	MapID   int

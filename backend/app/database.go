@@ -19,8 +19,25 @@ func (a *App) GetBestScores(uid, mode, page int, judgement, mstatus string, ln f
 	return database.GetBestScores(uid, mode, page, judgement, mstatus, ln)
 }
 
-func (a *App) GetRecentScores(uid, mode, page int, failed bool) ([]database.ScoreBoard, error) {
-	return database.GetRecentScores(uid, mode, page, failed)
+func (a *App) GetRecentScores(uid, mode, page int, failed bool) (database.CountedScoreBoard, error) {
+	var counted database.CountedScoreBoard
+	total, err := database.GetTotalRecent(uid, mode, page, failed)
+
+	if err != nil {
+		log.Warning.Println("GetRecentScores failed to count")
+		return counted, err
+	}
+
+	scores, err := database.GetRecentScores(uid, mode, page, failed)
+
+	if err != nil {
+		log.Warning.Println("GetRecentScores failed to get scores")
+		return counted, err
+	}
+
+	counted.Total = total
+	counted.Scores = scores
+	return counted, nil
 }
 
 func (a *App) GetScoreDetails(id int) (database.ScoreDetails, error) {

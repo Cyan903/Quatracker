@@ -27,6 +27,11 @@ export interface Scores {
     };
 }
 
+export interface CountedScores {
+    Total: number;
+    Scores: Scores[];
+}
+
 // Details
 interface Judge {
     Accuracy?: number;

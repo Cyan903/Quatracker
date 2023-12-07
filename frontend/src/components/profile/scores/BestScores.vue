@@ -33,12 +33,8 @@
                         v-model="options.lnPercent"
                     />
 
-                    <h4 class="text-xs mx-2">
-                        {{
-                            options.lnPercent >= 101
-                                ? "any"
-                                : options.lnPercent + "%"
-                        }}
+                    <h4 class="text-xs mx-2 w-[100px] text-center">
+                        {{ lnDisplay }}
                     </h4>
                 </div>
             </template>
@@ -58,11 +54,10 @@
         <div
             class="flex lg:max-w-[800px] lg:mx-auto justify-between align-middle"
         >
-            <div class="text-xs">
-                <span class="font-bold">Total Scores:</span>
-                <span>
-                    {{ noScores ? " ? " : " 200 " }}
-                </span>
+            <div class="font-bold text-xs [&>span]:after:content-['/'] [&>span]:after:mx-2">
+                <span>{{ options.judgement || "Any Judgement" }}</span>
+                <span>{{ options.status || "Any Rank Status" }}</span>
+                <span class="after:!content-none">{{ lnDisplay }}</span>
             </div>
 
             <Cog6ToothIcon
@@ -103,14 +98,13 @@
 
 <script lang="ts" setup>
 import type { Scores } from "@/types/scores";
+import { StarIcon, Cog6ToothIcon } from "@heroicons/vue/24/solid";
 import { ref, reactive, watch, onMounted, computed } from "vue";
 import { useToast } from "vue-toastification";
 
 import { useConfigStore } from "@/store/config";
-import { getBest, getRecent } from "@/use/useScores";
+import { getBest } from "@/use/useScores";
 import { getJudgements } from "@/use/useUsers";
-
-import { StarIcon, Cog6ToothIcon } from "@heroicons/vue/24/solid";
 
 import DelayedRange from "@/components/util/DelayedRange.vue";
 import ModalItem from "@/components/util/ModalItem.vue";
@@ -142,21 +136,23 @@ const lnPercent = computed(() => {
     return options.lnPercent == 101 ? -1.0 : options.lnPercent / 100;
 });
 
+const lnDisplay = computed(() => {
+    return options.lnPercent >= 101 ? "Any LN%" : options.lnPercent + "%";
+});
+
 const noScores = computed(() => {
     return scores.value?.length == 0;
 });
 
 const best = async () => {
-    // const data = await getBest(
-    //     props.id,
-    //     gamemode.value,
-    //     page.value,
-    //     options.judgement,
-    //     options.status,
-    //     lnPercent.value,
-    // );
-
-    const data = await getRecent(props.id, gamemode.value, page.value, false);
+    const data = await getBest(
+        props.id,
+        gamemode.value,
+        page.value,
+        options.judgement,
+        options.status,
+        lnPercent.value,
+    );
 
     if (data.error) {
         toast.error("Could not get best scores!");

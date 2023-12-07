@@ -1,4 +1,4 @@
-import type { ScoreDetails, Scores } from "@/types/scores";
+import type { CountedScores, ScoreDetails, Scores } from "@/types/scores";
 import {
     GetBestScores,
     GetRecentScores,
@@ -31,7 +31,7 @@ export async function getRecent(
     page: number,
     failed: boolean,
 ) {
-    return await useWails<Scores[]>(GetRecentScores, uid, mode, page, failed);
+    return await useWails<CountedScores>(GetRecentScores, uid, mode, page, failed);
 }
 
 export async function getDetails(id: number) {
