@@ -24,6 +24,7 @@
 
             <div class="px-4">
                 <BestScores :id="user.id" :mode="mode" />
+                <RecentScores class="my-[80px]" :id="user.id" :mode="mode" />
             </div>
         </div>
         <h4 v-else>No users were found.</h4>
@@ -41,7 +42,7 @@ import UserSwitcher from "@/components/profile/switcher/UserSwitcher.vue";
 import ModeSwitcher from "@/components/profile/switcher/ModeSwitcher.vue";
 
 import BestScores from "@/components/profile/scores/BestScores.vue";
-// TODO: RecentScores
+import RecentScores from "@/components/profile/scores/RecentScores.vue";
 
 const cfg = useConfigStore();
 const mode = ref(false);
