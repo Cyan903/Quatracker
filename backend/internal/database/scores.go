@@ -145,7 +145,7 @@ func GetBestScores(
 			Map.Id as MID,
 			Map.Artist, Map.Title,
 			Map.DifficultyName, Map.Creator, Map.RankedStatus,
-			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
+			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0)*100 as LN,
 			Map.Difficulty10x,
 			(
 				SELECT Id FROM Score WHERE MapMd5 = Map.Md5Checksum
@@ -232,7 +232,7 @@ func GetRecentScores(
 			Map.Id as MID,
 			Map.Artist, Map.Title,
 			Map.DifficultyName, Map.Creator, Map.RankedStatus,
-			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
+			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0)*100 as LN,
 			Map.Difficulty10x,
 			(
 				SELECT Id FROM Score WHERE MapMd5 = Map.Md5Checksum
@@ -300,7 +300,7 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 			Map.Id as MID,
 			Map.Artist, Map.Title, Map.DifficultyName, Map.Creator, Map.RankedStatus,
 			Map.SongLength, Map.Bpm, COALESCE(Map.DifficultyProcessorVersion, "Unknown"),
-			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0) as LN,
+			((LongNoteCount*1.0) / (RegularNoteCount+LongNoteCount)*1.0)*100 as LN,
 			Map.HasScratchKey, Map.Difficulty10x,
 			(
 				SELECT Id FROM Score ss WHERE MapMd5 = Map.Md5Checksum

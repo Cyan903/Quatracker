@@ -13,13 +13,14 @@
                 <span class="ml-[3px]">{{ scores.Total }}</span>
             </div>
 
-            <div
+            <button
                 class="btn btn-xs btn-outline"
                 :class="hide ? 'btn-success' : 'btn-error'"
+                :disabled="noScores"
                 @click="hide = !hide"
             >
                 Failed
-            </div>
+            </button>
         </div>
 
         <div>

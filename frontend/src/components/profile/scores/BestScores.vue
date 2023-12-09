@@ -133,7 +133,7 @@ const gamemode = computed(() => {
 });
 
 const lnPercent = computed(() => {
-    return options.lnPercent == 101 ? -1.0 : options.lnPercent / 100;
+    return options.lnPercent == 101 ? -1.0 : options.lnPercent;
 });
 
 const lnDisplay = computed(() => {

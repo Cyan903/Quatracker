@@ -2,7 +2,11 @@
     <teleport to="#modal">
         <div v-if="show" class="modal-background" @click="$emit('hide')"></div>
         <dialog class="modal" :class="{ 'modal-open': show }">
-            <div v-if="show" class="modal-box">
+            <div
+                v-if="show"
+                class="modal-box"
+                :class="{ 'modal-box-full': full }"
+            >
                 <button
                     @click="$emit('hide')"
                     class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
@@ -26,6 +30,7 @@ import { onMounted, onUnmounted } from "vue";
 
 defineProps<{
     show: boolean;
+    full?: boolean;
 }>();
 
 const emit = defineEmits<{

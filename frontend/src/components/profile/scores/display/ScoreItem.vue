@@ -76,7 +76,7 @@
 
                 <span>
                     <span class="font-bold">LN:</span>
-                    {{ score.Map.LNPercent.toFixed(1) }}%
+                    {{ score.Map.LNPercent.toFixed(2) }}%
                 </span>
             </div>
 

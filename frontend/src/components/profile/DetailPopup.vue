@@ -1,6 +1,6 @@
 <template>
     <div v-if="score && score.ScoreID">
-        <ModalItem :show="open" @hide="emits('hide')">
+        <ModalItem :show="open" :full="true" @hide="emits('hide')">
             <template #default>
                 <h4>{{ props.id }}</h4>
                 <pre>{{ score }}</pre>
