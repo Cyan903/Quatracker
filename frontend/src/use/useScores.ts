@@ -31,7 +31,13 @@ export async function getRecent(
     page: number,
     failed: boolean,
 ) {
-    return await useWails<CountedScores>(GetRecentScores, uid, mode, page, failed);
+    return await useWails<CountedScores>(
+        GetRecentScores,
+        uid,
+        mode,
+        page,
+        failed,
+    );
 }
 
 export async function getDetails(id: number) {

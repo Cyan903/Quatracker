@@ -54,7 +54,9 @@
         <div
             class="flex lg:max-w-[800px] lg:mx-auto justify-between align-middle"
         >
-            <div class="font-bold text-xs [&>span]:after:content-['/'] [&>span]:after:mx-2">
+            <div
+                class="font-bold text-xs [&>span]:after:content-['/'] [&>span]:after:mx-2"
+            >
                 <span>{{ options.judgement || "Any Judgement" }}</span>
                 <span>{{ options.status || "Any Rank Status" }}</span>
                 <span class="after:!content-none">{{ lnDisplay }}</span>

@@ -35,7 +35,7 @@
 import type { UsersList } from "@/use/useUsers";
 import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
-import { getUsers } from "@/use/useUsers"; 
+import { getUsers } from "@/use/useUsers";
 
 const emits = defineEmits<{
     (e: "setUser", id: number, name: string): void;
