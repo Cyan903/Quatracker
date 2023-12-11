@@ -1,7 +1,7 @@
 <template>
     <div
         :style="img"
-        class="flex items-center my-4 relative rounded-md lg:max-w-[800px] lg:mx-auto min-h-[80px] py-2"
+        class="flex items-center my-4 relative rounded-lg lg:max-w-[800px] lg:mx-auto min-h-[80px] py-2"
     >
         <h2
             class="absolute top-[3px] left-[3px] px-1 font-bold text-xl"
@@ -29,8 +29,8 @@
                 :title="fullTitle"
                 @click="setDetailId(score.ScoreID)"
             >
-                {{ shorten(score.Map.Title, 25) }} [{{
-                    shorten(score.Map.DifficultyName, 15)
+                {{ useShorten(score.Map.Title, 25) }} [{{
+                    useShorten(score.Map.DifficultyName, 15)
                 }}]
             </h2>
 
@@ -39,7 +39,7 @@
                 :title="fullTitle"
                 @click="setDetailId(score.ScoreID)"
             >
-                {{ shorten(fullTitle, 50) }}
+                {{ useShorten(fullTitle, 50) }}
             </h2>
 
             <div class="text-xs my-1 md:hidden">
@@ -120,6 +120,7 @@ import type { Scores } from "@/types/scores";
 import type { Ref } from "vue";
 import { inject, onMounted, ref, computed } from "vue";
 import { useDifficulty, useRank } from "@/use/useColors";
+import { useShorten } from "@/use/useUtil";
 import { useImage } from "@/use/useImage";
 
 import moment from "moment";
@@ -152,36 +153,20 @@ const gradient = computed(() => {
     if (props.score.Score.Grade === "F") {
         return "50, 0, 0";
     }
-    
+
     if (!props.score.Score.PersonalBest) {
-        return "25, 25, 0"
+        return "25, 25, 0";
     }
 
     return "0, 0, 0";
 });
 
-const shorten = (str: string, n: number) => {
-    if (str.length - 3 > n) {
-        return str.slice(0, n) + "...";
-    }
-
-    return str;
-};
-
 onMounted(async () => {
     const i = await useImage(props.score.MapID);
 
     img.value = `
-        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(${gradient.value}, 0.8)), url("${i}");
+        background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(${gradient.value}, 0.8)), url("${i}") no-repeat top;
+        background-size: cover;
     `;
 });
 </script>
-
-<style scoped>
-tr {
-    background-position: center;
-    background-repeat: no-repeat;
-    background-size: cover;
-    border-radius: 10px;
-}
-</style>

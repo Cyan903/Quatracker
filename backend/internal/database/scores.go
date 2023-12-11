@@ -49,10 +49,8 @@ type ScoreDetails struct {
 		Name                  string
 		DateTime              string
 		TotalScore            int
-		Grade                 string
 		MaxCombo              int
 		Mods                  string
-		Mode                  int
 		ScrollSpeed           int
 		PauseCount            int
 		PerformanceRating     float64
@@ -61,7 +59,9 @@ type ScoreDetails struct {
 
 		JudgedHits struct {
 			Accuracy       float64
+			Grade          string
 			RankedAccuracy float64
+			RankedGrade    string
 			CountMarv      int
 			CountPerf      int
 			CountGreat     int
@@ -79,10 +79,7 @@ type ScoreDetails struct {
 			CountMiss  int
 		}
 
-		Versions struct {
-			RatingVersion     string
-			DifficultyVersion string
-		}
+		RatingVersion string
 	}
 
 	Map struct {
@@ -100,6 +97,7 @@ type ScoreDetails struct {
 		}
 
 		ModeInfo struct {
+			Mode                       int
 			DifficultyProcessorVersion string
 			HasScratchKey              bool
 		}
@@ -293,7 +291,7 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 			Score.Grade, Score.Accuracy, Score.MaxCombo, Score.CountMarv,
 			Score.CountPerf, Score.CountGreat, Score.CountGood, Score.CountOkay, Score.CountMiss,
 			Score.Mods, Score.Mode, Score.ScrollSpeed, Score.PauseCount, Score.PerformanceRating,
-			COALESCE(Score.RatingProcessorVersion, "Unknown"), COALESCE(Score.DifficultyProcessorVersion, "Unknown"), Score.JudgementWindowPreset,
+			COALESCE(Score.RatingProcessorVersion, "Unknown"), Score.JudgementWindowPreset,
 			Score.JudgementWindowMarv, Score.JudgementWindowPerf, Score.JudgementWindowGreat, Score.JudgementWindowGood,
 			Score.JudgementWindowOkay, Score.JudgementWindowMiss, Score.RankedAccuracy,
 
@@ -319,8 +317,8 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 		&details.Score.LocalProfileId, &details.Score.Name, &details.Score.DateTime, &details.Score.TotalScore,
 		&grade, &details.Score.JudgedHits.Accuracy, &details.Score.MaxCombo, &details.Score.JudgedHits.CountMarv,
 		&details.Score.JudgedHits.CountPerf, &details.Score.JudgedHits.CountGreat, &details.Score.JudgedHits.CountGood, &details.Score.JudgedHits.CountOkay, &details.Score.JudgedHits.CountMiss,
-		&details.Score.Mods, &details.Score.Mode, &details.Score.ScrollSpeed, &details.Score.PauseCount, &details.Score.PerformanceRating,
-		&details.Score.Versions.RatingVersion, &details.Score.Versions.DifficultyVersion, &details.Score.JudgementWindowPreset,
+		&details.Score.Mods, &details.Map.ModeInfo.Mode, &details.Score.ScrollSpeed, &details.Score.PauseCount, &details.Score.PerformanceRating,
+		&details.Score.RatingVersion, &details.Score.JudgementWindowPreset,
 		&details.Score.JudgementConfig.CountMarv, &details.Score.JudgementConfig.CountPerf, &details.Score.JudgementConfig.CountGreat, &details.Score.JudgementConfig.CountGood,
 		&details.Score.JudgementConfig.CountOkay, &details.Score.JudgementConfig.CountMiss, &details.Score.JudgedHits.RankedAccuracy,
 
@@ -334,7 +332,8 @@ func GetScoreDetails(id int) (ScoreDetails, error) {
 		return details, err
 	}
 
-	details.Score.Grade = api.ConvertGrade(details.Score.JudgedHits.Accuracy, grade)
+	details.Score.JudgedHits.Grade = api.ConvertGrade(details.Score.JudgedHits.Accuracy, grade)
+	details.Score.JudgedHits.RankedGrade = api.ConvertGrade(details.Score.JudgedHits.RankedAccuracy, grade)
 	details.Map.RankedStatus = api.ConvertRankedStatus(status)
 	return details, nil
 }

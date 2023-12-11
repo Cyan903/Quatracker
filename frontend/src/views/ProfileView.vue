@@ -36,11 +36,11 @@ import { onMounted, provide, reactive, ref, watch } from "vue";
 import { useConfigStore } from "@/store/config";
 
 import PageNotAvailable from "@/components/config/PageNotAvailable.vue";
-import DetailPopup from "@/components/profile/DetailPopup.vue";
 
 import UserSwitcher from "@/components/profile/switcher/UserSwitcher.vue";
 import ModeSwitcher from "@/components/profile/switcher/ModeSwitcher.vue";
 
+import DetailPopup from "@/components/profile/scores/display/DetailPopup.vue";
 import BestScores from "@/components/profile/scores/BestScores.vue";
 import RecentScores from "@/components/profile/scores/RecentScores.vue";
 

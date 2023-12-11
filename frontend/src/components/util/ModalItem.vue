@@ -9,14 +9,14 @@
             >
                 <button
                     @click="$emit('hide')"
-                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2"
+                    class="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 z-[10]"
                 >
                     ✕
                 </button>
 
                 <slot></slot>
 
-                <div class="modal-action">
+                <div class="modal-action" :class="{ 'p-4': full }">
                     <slot name="actions"></slot>
                     <button @click="$emit('hide')" class="btn">Close</button>
                 </div>

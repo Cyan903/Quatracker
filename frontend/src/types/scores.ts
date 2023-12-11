@@ -33,15 +33,20 @@ export interface CountedScores {
 }
 
 // Details
-interface Judge {
-    Accuracy?: number;
-    RankedAccuracy?: number;
+export interface Judges {
     CountMarv: number;
     CountPerf: number;
     CountGreat: number;
     CountGood: number;
     CountOkay: number;
     CountMiss: number;
+}
+
+export interface JudgesAcc extends Judges {
+    Accuracy: number;
+    Grade: string;
+    RankedAccuracy: number;
+    RankedGrade: string;
 }
 
 export interface ScoreDetails {
@@ -53,22 +58,16 @@ export interface ScoreDetails {
         Name: string;
         DateTime: string;
         TotalScore: number;
-        Grade: string;
         MaxCombo: number;
         Mods: string;
-        Mode: number;
         ScrollSpeed: number;
         PauseCount: number;
         PerformanceRating: number;
         JudgementWindowPreset: string;
-        JudgedHits: Judge;
-        JudgementConfig: Judge;
         PersonalBest: boolean;
-
-        Versions: {
-            RatingVersion: string;
-            DifficultyVersion: string;
-        };
+        JudgedHits: JudgesAcc;
+        JudgementConfig: Judges;
+        RatingVersion: string;
     };
 
     Map: {
@@ -86,6 +85,7 @@ export interface ScoreDetails {
         };
 
         ModeInfo: {
+            Mode: number;
             DifficultyProcessorVersion: string;
             HasScratchKey: boolean;
         };

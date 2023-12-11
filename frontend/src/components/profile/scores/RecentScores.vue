@@ -10,7 +10,7 @@
         >
             <div class="text-xs">
                 <span class="font-bold">Total Scores:</span>
-                <span class="ml-[3px]">{{ scores.Total }}</span>
+                <span class="ml-[3px]">{{ useComma(scores.Total) }}</span>
             </div>
 
             <button
@@ -55,6 +55,7 @@ import { ref, watch, onMounted, computed } from "vue";
 import { useToast } from "vue-toastification";
 
 import { useConfigStore } from "@/store/config";
+import { useComma } from "@/use/useUtil";
 import { getRecent } from "@/use/useScores";
 
 import ScoreItem from "@/components/profile/scores/display/ScoreItem.vue";

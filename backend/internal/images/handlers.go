@@ -25,8 +25,8 @@ func serve(id int) ([]byte, error) {
 	file, err := os.ReadFile(img)
 
 	if err != nil {
-		log.Error.Println("could not read", img)
-		log.Error.Println("read error", err)
+		log.Warning.Println("could not read", img)
+		log.Warning.Println("read error", err)
 
 		return []byte{}, err
 	}
