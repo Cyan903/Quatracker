@@ -1,33 +1,43 @@
 <template>
     <PageNotAvailable v-if="!cfg.validConfig" />
     <div v-else>
-        <div>
-            <UserSwitcher
-                :id="user.id"
-                :username="user.username"
-                @set-user="setUser"
-            />
+        <div class="bg-base-100 sticky w-full z-[10] top-[80px]">
+            <div class="p-4 flex">
+                <ModeSwitcher
+                    :disabled="user.id == -1"
+                    :mode="mode"
+                    @set-mode="(g) => (mode = g)"
+                />
 
-            <ModeSwitcher
-                :disabled="user.id == -1"
-                :mode="mode"
-                @set-mode="(g) => (mode = g)"
-            />
-        </div>
-
-        <div v-if="user.id != -1">
-            <DetailPopup
-                :id="scoreDetailID"
-                :open="detailOpen"
-                @hide="detailOpen = false"
-            />
-
-            <div class="px-4">
-                <BestScores :id="user.id" :mode="mode" />
-                <RecentScores class="my-[80px]" :id="user.id" :mode="mode" />
+                <UserSwitcher
+                    :id="user.id"
+                    :username="user.username"
+                    @set-user="setUser"
+                />
             </div>
+
+            <div class="w-full h-[1px] bg-accent"></div>
         </div>
-        <h4 v-else>No users were found.</h4>
+
+        <div class="relative top-4">
+            <div v-if="user.id != -1">
+                <DetailPopup
+                    :id="scoreDetailID"
+                    :open="detailOpen"
+                    @hide="detailOpen = false"
+                />
+
+                <div class="px-4">
+                    <BestScores :id="user.id" :mode="mode" />
+                    <RecentScores
+                        class="my-[80px]"
+                        :id="user.id"
+                        :mode="mode"
+                    />
+                </div>
+            </div>
+            <h4 v-else class="font-bold text-center my-4">No users were found.</h4>
+        </div>
     </div>
 </template>
 

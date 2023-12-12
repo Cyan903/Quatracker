@@ -1,5 +1,6 @@
 <template>
     <div>
+        <div class="bg-secondary sticky w-full z-[10] h-[1px] top-[80px]"></div>
         <h2 class="text-3xl font-bold my-4">Config</h2>
 
         <GamePathItem />

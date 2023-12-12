@@ -1,19 +1,20 @@
 <template>
     <div
         v-if="props.id != -1"
-        class="dropdown w-full"
+        class="dropdown dropdown-end w-[calc(100%-105px)]"
         :class="{ 'dropdown-open': open }"
     >
-        <div class="btn" @click="usersFetch(true)">
-            {{ props.id }} - {{ props.username }}
+        <div class="btn btn-sm" @click="usersFetch(true)">
+            <UserIcon class="w-3 h-3" />
+            {{ props.username }} #{{ props.id }}
         </div>
 
         <ul
-            class="dropdown-content z-[1] menu p-2 shadow bg-base-200 rounded-box w-full"
+            class="dropdown-content z-[5] menu p-2 shadow bg-base-200 rounded-box w-full"
         >
             <li v-for="user in list.Local" :key="user.Id">
                 <a @click="setUserData(user.Id, user.Username)">
-                    {{ user.Id }} - {{ user.Username }}
+                    {{ user.Username }}
                 </a>
             </li>
 
@@ -21,14 +22,12 @@
 
             <li v-for="user in list.Unknown" :key="user.Id">
                 <a @click="setUserData(user.Id, user.Username)">
-                    {{ user.Id }} - {{ user.Username }}
+                    #{{ user.Id }} 
                 </a>
             </li>
         </ul>
     </div>
-    <div v-else class="w-full">
-        <button class="btn" disabled>No users found!</button>
-    </div>
+    <button v-else class="btn btn btn-sm" disabled>No users found!</button>
 </template>
 
 <script lang="ts" setup>
@@ -36,6 +35,8 @@ import type { UsersList } from "@/use/useUsers";
 import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { getUsers } from "@/use/useUsers";
+
+import { UserIcon } from "@heroicons/vue/24/solid";
 
 const emits = defineEmits<{
     (e: "setUser", id: number, name: string): void;

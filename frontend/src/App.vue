@@ -19,6 +19,6 @@ import NavbarItem from "@/components/NavbarItem.vue";
 }
 
 .router-enter-active {
-    transition: all 0.1s ease-in-out;
+    transition: all 0.2s ease-in-out;
 }
 </style>

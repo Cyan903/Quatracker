@@ -1,34 +1,60 @@
 <template>
-    <div class="tabs">
-        <a
-            @click="vist('/')"
-            :class="visited('/')"
-            class="tab tab-lg tab-lifted"
-        >
-            Profiles
-        </a>
+    <!-- TODO: A lot of user-select: none -->
+    <div class="bg-base-100 sticky w-full z-[10] h-[80px] top-0 p-4">
+        <div class="flex justify-between align-middle">
+            <img
+                class="w-[150px] opacity-80"
+                :class="visited('/')"
+                @click="vist('/')"
+                :src="QuaverIcon"
+            />
 
-        <a
-            @click="vist('/config')"
-            :class="visited('/config')"
-            class="tab tab-lg tab-lifted"
-        >
-            Configuration
-        </a>
+            <div class="rotateAnimate p-4">
+                <Cog8ToothIcon
+                    class="w-[25px] h-[25px] opacity-60"
+                    :class="visited('/config')"
+                    @click="vist('/config')"
+                />
+            </div>
+        </div>
     </div>
 </template>
 
 <script lang="ts" setup>
 import { ref } from "vue";
-import { useRouter } from "vue-router";
+import { useRouter, useRoute } from "vue-router";
+
+import { Cog8ToothIcon } from "@heroicons/vue/24/solid";
+import QuaverIcon from "@/assets/images/logo.svg";
 
 const router = useRouter();
+const route = useRoute();
 const active = ref(location.pathname);
 
 const vist = (n: string) => {
+    if (n == "/config" && route.fullPath == n) {
+        active.value = "/";
+        router.push("/");
+        return;
+    }
+
     active.value = n;
     router.push(n);
 };
 
-const visited = (n: string) => (active.value == n ? "tab-active" : "");
+const visited = (n: string) => (active.value == n ? "visited" : "");
 </script>
+
+<style scoped>
+.visited {
+    opacity: 100% !important;
+}
+
+.rotateAnimate .visited {
+    transform: rotate(30deg);
+}
+
+.rotateAnimate * {
+    transition: all 0.3s ease;
+}
+</style>
