@@ -22,7 +22,11 @@
             v-model="path"
         />
 
-        <button class="btn sm:ml-1 max-sm:w-full" @click="setPath" :disabled="invalid">
+        <button
+            class="btn sm:ml-1 max-sm:w-full"
+            @click="setPath"
+            :disabled="invalid"
+        >
             Update
         </button>
     </div>

@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div class="divider">
+        <div class="divider my-8">
             <ArrowUturnLeftIcon class="w-[2rem] h-[2rem]" />
             <span class="font-bold">Recent Scores</span>
         </div>
@@ -24,7 +24,7 @@
         </div>
 
         <div>
-            <h4 v-if="noScores" class="text-center my-[100px]">
+            <h4 v-if="noScores" class="text-center my-[150px] italic text-xl">
                 No scores found!
             </h4>
             <template v-else>
@@ -33,17 +33,18 @@
                     :key="score.ScoreID"
                     :score="score"
                 />
-
-                <div class="text-center">
-                    <button
-                        :disabled="noScores"
-                        class="btn btn-secondary btn-outline max-md:w-full w-[50%] md:max-w-[700px]"
-                        @click="paginate"
-                    >
-                        Load
-                    </button>
-                </div>
             </template>
+
+            <div
+                class="max-md:text-center text-right lg:max-w-[800px] lg:mx-auto"
+            >
+                <PaginateItem
+                    :disable="noScores && page === 0"
+                    :page="page"
+                    color="btn-secondary"
+                    @update="paginate"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -58,6 +59,7 @@ import { useConfigStore } from "@/store/config";
 import { useComma } from "@/use/useUtil";
 import { getRecent } from "@/use/useScores";
 
+import PaginateItem from "@/components/util/PaginateItem.vue";
 import ScoreItem from "@/components/profile/scores/display/ScoreItem.vue";
 
 const cfg = useConfigStore();
@@ -102,10 +104,7 @@ const recent = async () => {
     }
 
     scores.value.Total = data.result?.Total || 0;
-    scores.value.Scores = [
-        ...scores.value.Scores,
-        ...(data.result?.Scores || []),
-    ];
+    scores.value.Scores = data.result?.Scores || [];
 };
 
 // Data fetching...
@@ -121,8 +120,8 @@ const init = () => {
     recent();
 };
 
-const paginate = () => {
-    page.value++;
+const paginate = (n: number) => {
+    page.value += n;
     recent();
 };
 

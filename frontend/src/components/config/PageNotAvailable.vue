@@ -7,7 +7,9 @@
                 Please update your configuration in the configuration tab.
             </p>
 
-            <router-link to="/config" class="btn w-full">Configuration</router-link>
+            <router-link to="/config" class="btn w-full"
+                >Configuration</router-link
+            >
         </div>
     </div>
 </template>

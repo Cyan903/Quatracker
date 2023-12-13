@@ -36,7 +36,9 @@
                     />
                 </div>
             </div>
-            <h4 v-else class="font-bold text-center my-4">No users were found.</h4>
+            <h4 v-else class="font-bold text-center my-4">
+                No users were found.
+            </h4>
         </div>
     </div>
 </template>

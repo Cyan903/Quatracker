@@ -46,7 +46,7 @@
             </template>
         </ModalItem>
 
-        <div class="divider">
+        <div class="divider my-8">
             <StarIcon class="w-[2rem] h-[2rem]" />
             <span class="font-bold">Best Scores</span>
         </div>
@@ -63,18 +63,13 @@
             </div>
 
             <Cog6ToothIcon
-                v-if="noScores"
-                class="w-[1rem] h-[1rem] opacity-60"
-            />
-            <Cog6ToothIcon
-                v-else
                 class="w-[1rem] h-[1rem] hover:opacity-60 active:opacity-80"
                 @click="showModal"
             />
         </div>
 
         <div>
-            <h4 v-if="noScores" class="text-center my-[100px]">
+            <h4 v-if="noScores" class="text-center my-[150px] italic text-xl">
                 No scores found!
             </h4>
             <template v-else>
@@ -83,17 +78,18 @@
                     :key="score.ScoreID"
                     :score="score"
                 />
-
-                <div class="text-center">
-                    <button
-                        :disabled="noScores"
-                        class="btn btn-primary btn-outline max-md:w-full w-[50%] md:max-w-[700px]"
-                        @click="paginate"
-                    >
-                        Load
-                    </button>
-                </div>
             </template>
+
+            <div
+                class="max-md:text-center text-right lg:max-w-[800px] lg:mx-auto"
+            >
+                <PaginateItem
+                    :disable="noScores && page === 0"
+                    :page="page"
+                    color="btn-primary"
+                    @update="paginate"
+                />
+            </div>
         </div>
     </div>
 </template>
@@ -110,6 +106,7 @@ import { getJudgements } from "@/use/useUsers";
 
 import DelayedRange from "@/components/util/DelayedRange.vue";
 import ModalItem from "@/components/util/ModalItem.vue";
+import PaginateItem from "@/components/util/PaginateItem.vue";
 import ScoreItem from "@/components/profile/scores/display/ScoreItem.vue";
 
 const cfg = useConfigStore();
@@ -165,7 +162,7 @@ const best = async () => {
         toast.error("Reached end of scores listing!");
     }
 
-    scores.value = [...scores.value, ...(data.result || [])];
+    scores.value = data.result || [];
 };
 
 const judgements = async () => {
@@ -209,8 +206,8 @@ const reset = () => {
     judgements();
 };
 
-const paginate = () => {
-    page.value++;
+const paginate = (n: number) => {
+    page.value += n;
     best();
 };
 
