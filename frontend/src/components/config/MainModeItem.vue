@@ -1,9 +1,14 @@
 <template>
     <div>
-        <p class="my-4">Default key mode:</p>
+        <div class="font-bold">
+            <AdjustmentsHorizontalIcon class="w-5 h-5 inline mr-1" />
+            <span class="text-lg align-middle">Default key mode:</span>
+        </div>
+
+        <p class="my-2">Remember the prefered key mode.</p>
 
         <select
-            class="select select-bordered"
+            class="select select-bordered max-sm:w-full max-sm:my-2 sm:min-w-[250px]"
             v-model="mode"
             :disabled="!cfg.validConfig"
         >
@@ -11,7 +16,11 @@
             <option :value="true">7k</option>
         </select>
 
-        <button class="btn" @click="setMode" :disabled="!cfg.validConfig">
+        <button
+            class="btn sm:ml-1 max-sm:w-full"
+            @click="setMode"
+            :disabled="!cfg.validConfig"
+        >
             Update
         </button>
     </div>
@@ -21,6 +30,8 @@
 import { onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { useConfigStore } from "@/store/config";
+
+import { AdjustmentsHorizontalIcon } from "@heroicons/vue/24/solid";
 
 const cfg = useConfigStore();
 const toast = useToast();

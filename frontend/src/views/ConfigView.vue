@@ -1,10 +1,13 @@
 <template>
     <div>
-        <div class="bg-secondary sticky w-full z-[10] h-[1px] top-[80px]"></div>
-        <h2 class="text-3xl font-bold my-4">Config</h2>
+        <div class="bg-accent sticky w-full z-[10] h-[1px] top-[80px]"></div>
+        <div class="p-4">
+            <h2 class="text-3xl font-bold my-4">Configuration</h2>
 
-        <GamePathItem />
-        <MainModeItem />
+            <GamePathItem />
+            <div class="my-4 divider"></div>
+            <MainModeItem />
+        </div>
     </div>
 </template>
 

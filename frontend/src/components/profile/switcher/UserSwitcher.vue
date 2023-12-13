@@ -1,7 +1,7 @@
 <template>
     <div
         v-if="props.id != -1"
-        class="dropdown dropdown-end w-[calc(100%-105px)]"
+        class="dropdown md:w-[calc(100%-105px)] max-w-[700px]"
         :class="{ 'dropdown-open': open }"
     >
         <div class="btn btn-sm" @click="usersFetch(true)">
@@ -10,7 +10,7 @@
         </div>
 
         <ul
-            class="dropdown-content z-[5] menu p-2 shadow bg-base-200 rounded-box w-full"
+            class="dropdown-content z-[5] menu p-2 shadow bg-base-200 rounded-box w-full max-md:left-[-100px] max-md:absolute max-md:w-[calc(100vw-2rem)]"
         >
             <li v-for="user in list.Local" :key="user.Id">
                 <a @click="setUserData(user.Id, user.Username)">
@@ -18,11 +18,11 @@
                 </a>
             </li>
 
-            <div v-if="list.Unknown?.length" class="divider"></div>
+            <div v-if="list.Unknown?.length" class="divider">Unknown</div>
 
             <li v-for="user in list.Unknown" :key="user.Id">
                 <a @click="setUserData(user.Id, user.Username)">
-                    #{{ user.Id }} 
+                    #{{ user.Id }}
                 </a>
             </li>
         </ul>

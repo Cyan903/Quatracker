@@ -1,20 +1,30 @@
 <template>
-    <div>
-        <p class="my-4">Path to Quaver's game files...</p>
-        <code class="block my-2">
-            /home/hwk/.local/share/Steam/steamapps/common/Quaver/
-        </code>
+    <div class="leading-[2rem] break-all">
+        <div class="font-bold">
+            <FolderIcon class="w-5 h-5 inline mr-1" />
+            <span class="text-lg align-middle">
+                Path to Quaver's game files:
+            </span>
+        </div>
+
+        <div class="my-2">
+            <span class="max-sm:hidden">Example:</span>
+            <span class="font-mono text-sm">
+                /home/user/.local/share/Steam/steamapps/common/Quaver/
+            </span>
+        </div>
 
         <input
             type="text"
-            class="input input-bordered"
+            class="input input-bordered max-sm:w-full max-sm:my-2 sm:min-w-[250px]"
             :class="{ 'input-error': invalid }"
             placeholder="Path to Quaver game files..."
             v-model="path"
         />
 
-        <button class="btn" @click="setPath" :disabled="invalid">Update</button>
-        <div class="my-4 divider"></div>
+        <button class="btn sm:ml-1 max-sm:w-full" @click="setPath" :disabled="invalid">
+            Update
+        </button>
     </div>
 </template>
 
@@ -22,6 +32,8 @@
 import { computed, onMounted, ref } from "vue";
 import { useToast } from "vue-toastification";
 import { useConfigStore } from "@/store/config";
+
+import { FolderIcon } from "@heroicons/vue/24/solid";
 
 const cfg = useConfigStore();
 const toast = useToast();

@@ -97,7 +97,7 @@ const recent = async () => {
         return;
     }
 
-    if (!data.result) {
+    if (!data.result?.Scores) {
         toast.error("Reached end of scores listing!");
     }
 
