@@ -16,7 +16,6 @@
             <button
                 class="btn btn-xs btn-outline"
                 :class="hide ? 'btn-success' : 'btn-error'"
-                :disabled="noScores"
                 @click="hide = !hide"
             >
                 Failed
@@ -112,6 +111,7 @@ const init = () => {
     if (!cfg.validConfig) return;
 
     page.value = 0;
+    hide.value = false;
     scores.value = {
         Total: 0,
         Scores: [],

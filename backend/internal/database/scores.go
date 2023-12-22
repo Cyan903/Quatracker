@@ -211,9 +211,7 @@ func GetRecentScores(
 	hideFailed bool,
 ) ([]ScoreBoard, error) {
 	var scores []ScoreBoard
-
-	// Configure optional
-	failed := -1
+	var failed = -1
 
 	if hideFailed {
 		failed = 5

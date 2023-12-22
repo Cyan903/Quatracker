@@ -27,6 +27,11 @@
                     @hide="detailOpen = false"
                 />
 
+                <!-- TEMP -->
+                <div>
+                    <OverallItem :id="user.id" :mode="mode" />
+                </div>
+
                 <div class="px-4">
                     <BestScores :id="user.id" :mode="mode" />
                     <RecentScores
@@ -55,6 +60,8 @@ import ModeSwitcher from "@/components/profile/switcher/ModeSwitcher.vue";
 import DetailPopup from "@/components/profile/scores/display/DetailPopup.vue";
 import BestScores from "@/components/profile/scores/BestScores.vue";
 import RecentScores from "@/components/profile/scores/RecentScores.vue";
+
+import OverallItem from "@/components/profile/stats/OverallItem.vue";
 
 const cfg = useConfigStore();
 const mode = ref(false);

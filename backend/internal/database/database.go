@@ -17,6 +17,7 @@ const DefaultPaginate = 10
 
 var ErrInvalidPath = errors.New("invalid game path")
 var ErrBGNotFound = errors.New("background file not found")
+var ErrNoScores = errors.New("no scores")
 var Conn *sql.DB
 
 func LoadDB() error {
