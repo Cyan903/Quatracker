@@ -27,12 +27,10 @@
                     @hide="detailOpen = false"
                 />
 
-                <!-- TEMP -->
-                <div>
+                <div v-if="stats" class="px-4">
                     <OverallItem :id="user.id" :mode="mode" />
                 </div>
-
-                <div class="px-4">
+                <div v-else class="px-4">
                     <BestScores :id="user.id" :mode="mode" />
                     <RecentScores
                         class="my-[80px]"
@@ -64,13 +62,15 @@ import RecentScores from "@/components/profile/scores/RecentScores.vue";
 import OverallItem from "@/components/profile/stats/OverallItem.vue";
 
 const cfg = useConfigStore();
-const mode = ref(false);
-const scoreDetailID = ref(0);
-const detailOpen = ref(false);
 const user = reactive({
     id: -1,
     username: "",
 });
+
+const mode = ref(false);
+const stats = ref(false);
+const detailOpen = ref(false);
+const scoreDetailID = ref(0);
 
 const setUser = (id: number, name: string) => {
     user.id = id;

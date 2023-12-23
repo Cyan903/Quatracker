@@ -26,6 +26,7 @@
             <h4 v-if="noScores" class="text-center my-[150px] italic text-xl">
                 No scores found!
             </h4>
+            <LoadingScore v-else-if="loading" />
             <template v-else>
                 <ScoreItem
                     v-for="score in scores.Scores"
@@ -60,6 +61,7 @@ import { getRecent } from "@/use/useScores";
 
 import PaginateItem from "@/components/util/PaginateItem.vue";
 import ScoreItem from "@/components/profile/scores/display/ScoreItem.vue";
+import LoadingScore from "@/components/profile/scores/display/LoadingScore.vue";
 
 const cfg = useConfigStore();
 const toast = useToast();
@@ -75,6 +77,7 @@ const scores = ref<CountedScores>({
 });
 
 const page = ref(0);
+const loading = ref(true);
 const hide = ref(false);
 
 const gamemode = computed(() => {
@@ -82,7 +85,7 @@ const gamemode = computed(() => {
 });
 
 const noScores = computed(() => {
-    return scores.value?.Scores.length == 0;
+    return scores.value?.Scores.length == 0 && !loading.value;
 });
 
 const recent = async () => {
@@ -92,6 +95,8 @@ const recent = async () => {
         page.value,
         hide.value,
     );
+
+    loading.value = false;
 
     if (data.error) {
         toast.error("Could not get recent scores!");
@@ -117,11 +122,14 @@ const init = () => {
         Scores: [],
     };
 
+    loading.value = true;
     recent();
 };
 
 const paginate = (n: number) => {
     page.value += n;
+    loading.value = true;
+
     recent();
 };
 

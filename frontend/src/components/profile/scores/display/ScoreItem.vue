@@ -1,7 +1,7 @@
 <template>
     <div
         :style="img"
-        class="flex items-center my-4 relative rounded-lg lg:max-w-[800px] lg:mx-auto min-h-[80px] py-2"
+        class="flex items-center my-4 relative rounded-lg lg:max-w-[800px] lg:mx-auto min-h-[80px] py-2 score-item"
     >
         <h2
             class="absolute top-[3px] left-[3px] px-1 font-bold text-xl"

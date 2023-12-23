@@ -3,6 +3,7 @@
 @import "./scores/difficulty.css";
 @import "./scores/grade.css";
 @import "./scores/rank.css";
+@import "./scores/item.css";
 
 @import "./util/modal.css";
 @import "./util/toggle.css";

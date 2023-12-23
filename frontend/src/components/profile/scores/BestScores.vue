@@ -72,6 +72,7 @@
             <h4 v-if="noScores" class="text-center my-[150px] italic text-xl">
                 No scores found!
             </h4>
+            <LoadingScore v-else-if="loading" />
             <template v-else>
                 <ScoreItem
                     v-for="score in scores"
@@ -107,7 +108,9 @@ import { getJudgements } from "@/use/useUsers";
 import DelayedRange from "@/components/util/DelayedRange.vue";
 import ModalItem from "@/components/util/ModalItem.vue";
 import PaginateItem from "@/components/util/PaginateItem.vue";
+
 import ScoreItem from "@/components/profile/scores/display/ScoreItem.vue";
+import LoadingScore from "@/components/profile/scores/display/LoadingScore.vue";
 
 const cfg = useConfigStore();
 const toast = useToast();
@@ -120,6 +123,7 @@ const props = defineProps<{
 const scores = ref<Scores[]>([]);
 const judges = ref<string[]>([]);
 const modal = ref(false);
+const loading = ref(true);
 const page = ref(0);
 const options = reactive({
     judgement: "",
@@ -140,7 +144,7 @@ const lnDisplay = computed(() => {
 });
 
 const noScores = computed(() => {
-    return scores.value?.length == 0;
+    return scores.value?.length == 0 && !loading.value;
 });
 
 const best = async () => {
@@ -152,6 +156,8 @@ const best = async () => {
         options.status,
         lnPercent.value,
     );
+
+    loading.value = false;
 
     if (data.error) {
         toast.error("Could not get best scores!");
@@ -193,6 +199,7 @@ const init = () => {
     judges.value = [];
 
     page.value = 0;
+    loading.value = true;
 
     best();
 };
@@ -201,6 +208,7 @@ const reset = () => {
     scores.value = [];
     judges.value = [];
     page.value = 0;
+    loading.value = true;
 
     best();
     judgements();
@@ -208,6 +216,8 @@ const reset = () => {
 
 const paginate = (n: number) => {
     page.value += n;
+    loading.value = true;
+
     best();
 };
 

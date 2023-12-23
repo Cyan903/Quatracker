@@ -36,3 +36,8 @@
 .mode-2.active {
     background-color: #9b51e0;
 }
+
+.modes button:active {
+    transform: scale(0.9);
+    transition: all 0.2s;
+}

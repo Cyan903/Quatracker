@@ -14,7 +14,7 @@
     },
     "dependencies": {
         "@heroicons/vue": "^2.0.18",
-        "daisyui": "^3.9.4",
+        "daisyui": "^4.4.23",
         "moment": "^2.29.4",
         "pinia": "^2.1.7",
         "vue": "^3.2.37",

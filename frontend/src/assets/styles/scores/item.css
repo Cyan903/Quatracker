@@ -1,0 +1,15 @@
+.score-item {
+    animation: pop 0.2s;
+    animation-iteration-count: 1;
+}
+
+@keyframes pop {
+    from {
+        transform: scale(0.95);
+        opacity: 0;
+    }
+    to {
+        transform: scale(1);
+        opacity: 1;
+    }
+}
