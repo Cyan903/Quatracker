@@ -4,13 +4,13 @@
         class="dropdown md:w-[calc(100%-105px)] max-w-[700px]"
         :class="{ 'dropdown-open': open }"
     >
-        <div class="btn btn-sm" @click="usersFetch(true)">
+        <div class="btn btn-sm bg-base-300" @click="usersFetch(true)">
             <UserIcon class="w-3 h-3" />
             {{ props.username }} #{{ props.id }}
         </div>
 
         <ul
-            class="dropdown-content z-[5] menu p-2 shadow bg-base-200 rounded-box w-full max-md:left-[-100px] max-md:absolute max-md:w-[calc(100vw-2rem)]"
+            class="dropdown-content z-[5] menu p-2 shadow bg-base-300 rounded-box w-full max-md:left-[-158.5px] max-md:absolute max-md:w-[calc(100vw-2rem)]"
         >
             <li v-for="user in list.Local" :key="user.Id">
                 <a @click="setUserData(user.Id, user.Username)">

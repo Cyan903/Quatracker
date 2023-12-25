@@ -18,6 +18,10 @@
             </div>
         </div>
     </div>
+
+    <div
+        class="bg-base-content sticky w-full z-[2] h-[1px] top-[80px] opacity-20"
+    ></div>
 </template>
 
 <script lang="ts" setup>

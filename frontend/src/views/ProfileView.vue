@@ -1,8 +1,18 @@
 <template>
     <PageNotAvailable v-if="!cfg.validConfig" />
     <div v-else>
-        <div class="bg-base-100 sticky w-full z-[10] top-[80px]">
-            <div class="p-4 flex">
+        <NavbarBorder bg="bg-primary" />
+
+        <div
+            class="p-4 bg-base-200 sticky w-full z-[10] top-[81px] rounded-b-xl"
+        >
+            <div class="flex">
+                <StatsSwitcher
+                    :disabled="user.id == -1"
+                    :stats="stats"
+                    @set-stats="(n) => (stats = n)"
+                />
+
                 <ModeSwitcher
                     :disabled="user.id == -1"
                     :mode="mode"
@@ -15,11 +25,9 @@
                     @set-user="setUser"
                 />
             </div>
-
-            <div class="w-full h-[1px] bg-accent"></div>
         </div>
 
-        <div class="relative top-4">
+        <div>
             <div v-if="user.id != -1">
                 <DetailPopup
                     :id="scoreDetailID"
@@ -50,10 +58,12 @@
 import { onMounted, provide, reactive, ref, watch } from "vue";
 import { useConfigStore } from "@/store/config";
 
+import NavbarBorder from "@/components/NavbarBorder.vue";
 import PageNotAvailable from "@/components/config/PageNotAvailable.vue";
 
 import UserSwitcher from "@/components/profile/switcher/UserSwitcher.vue";
 import ModeSwitcher from "@/components/profile/switcher/ModeSwitcher.vue";
+import StatsSwitcher from "@/components/profile/switcher/StatsSwitcher.vue";
 
 import DetailPopup from "@/components/profile/scores/display/DetailPopup.vue";
 import BestScores from "@/components/profile/scores/BestScores.vue";

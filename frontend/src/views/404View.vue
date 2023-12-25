@@ -1,6 +1,6 @@
 <template>
     <div class="text-center">
-        <div class="bg-error sticky w-full z-[10] h-[1px] top-[80px]"></div>
+        <NavbarBorder bg="bg-error" />
 
         <div class="my-4 p-4 inline-block">
             <h2 class="text-3xl font-bold">Not found!</h2>
@@ -10,3 +10,7 @@
         </div>
     </div>
 </template>
+
+<script lang="ts" setup>
+import NavbarBorder from "@/components/NavbarBorder.vue";
+</script>
