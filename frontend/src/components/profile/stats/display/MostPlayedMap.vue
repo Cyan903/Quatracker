@@ -1,6 +1,6 @@
 <template>
     <div
-        class="border sm:h-[60px] my-4 rounded-md border-gray-700 flex most-map"
+        class="border sm:h-[60px] my-4 rounded-md border-gray-700 flex most-map shadow-lg"
         :style="img"
     >
         <div

@@ -182,6 +182,7 @@ const init = async () => {
     stats.most = [];
 
     page.value = 0;
+    tabs.value = false;
 
     await longest();
     await most();

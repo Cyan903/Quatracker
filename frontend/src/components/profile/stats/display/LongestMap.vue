@@ -1,6 +1,6 @@
 <template>
     <div
-        class="my-4 rounded-lg lg:max-w-[800px] lg:mx-auto min-h-[80px] p-2 longest-map sm:flex items-center"
+        class="my-4 rounded-lg lg:max-w-[800px] lg:mx-auto min-h-[80px] p-2 longest-map sm:flex items-center shadow-lg"
         :style="img"
     >
         <div class="m-4 text-center max-sm:hidden">

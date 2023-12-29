@@ -37,6 +37,9 @@
             <div v-if="stats" class="px-4">
                 <OverallItem :id="user.id" :mode="mode ? 2 : 1" />
                 <MapsItem :id="user.id" :mode="mode ? 2 : 1" />
+                <JudgesItem :id="user.id" :mode="mode ? 2 : 1" />
+                <GradesItem :id="user.id" :mode="mode ? 2 : 1" />
+                <HistoryItem :id="user.id" :mode="mode ? 2 : 1" />
             </div>
             <div v-else class="px-4">
                 <BestScores :id="user.id" :mode="mode" />
@@ -64,6 +67,9 @@ import RecentScores from "@/components/profile/scores/RecentScores.vue";
 
 import OverallItem from "@/components/profile/stats/OverallItem.vue";
 import MapsItem from "@/components/profile/stats/MapsItem.vue";
+import JudgesItem from "@/components/profile/stats/JudgesItem.vue";
+import GradesItem from "@/components/profile/stats/GradesItem.vue";
+import HistoryItem from "@/components/profile/stats/HistoryItem.vue";
 
 const cfg = useConfigStore();
 const user = reactive({

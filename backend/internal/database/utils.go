@@ -71,7 +71,7 @@ func GraphDateEarliest(uid, mode int) (time.Time, error) {
 }
 
 func GraphCreateRange(earliest time.Time, dates map[string]int) {
-	end := time.Now().AddDate(0, 1, 0)
+	end := time.Now()
 
 	for d := earliest; !d.After(end); d = d.AddDate(0, 1, 0) {
 		dates[d.Format("2006/01")] = 0

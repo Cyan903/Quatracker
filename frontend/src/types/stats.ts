@@ -38,3 +38,32 @@ export interface MostPlayed {
     Creator: string;
     PlayCount: number;
 }
+
+export interface JudgesCount {
+    CountMarv: number;
+    CountPerf: number;
+    CountGreat: number;
+    CountGood: number;
+    CountOkay: number;
+    CountMiss: number;
+}
+
+export interface Grades {
+    A: number;
+    B: number;
+    C: number;
+    D: number;
+    F: number;
+    S: number;
+    SS: number;
+    X: number;
+}
+
+export interface GradesCount {
+    AllGrades: Grades;
+    RankedGrades: Grades;
+}
+
+export interface PlayHistory {
+    [key: string]: number;
+}
