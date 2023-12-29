@@ -1,6 +1,6 @@
 <template>
     <div
-        v-for="_ in (n || 10)"
+        v-for="_ in n || 10"
         :key="_"
         class="my-4 rounded-lg lg:max-w-[800px] lg:mx-auto min-h-[80px] py-2 bg-base-200 skeleton"
     >
@@ -33,5 +33,5 @@
 </template>
 
 <script lang="ts" setup>
-defineProps<{n?: number}>();
+defineProps<{ n?: number }>();
 </script>

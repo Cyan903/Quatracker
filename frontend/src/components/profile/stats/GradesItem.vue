@@ -28,16 +28,16 @@
                 </template>
             </div>
 
-            <div class="sm:flex justify-between max-sm:m-4 mt-8">
+            <div class="my-8 w-[75%] m-auto max-sm:w-full">
                 <button
-                    class="btn btn-outline btn-sm max-sm:w-full btn-primary mr-2"
+                    class="btn btn-outline btn-sm btn-primary w-full mb-2"
                     @click="toggleModes"
                 >
                     {{ gradeMode == "AllGrades" ? "All" : "Ranked" }}
                 </button>
 
                 <button
-                    class="btn btn-outline btn-sm max-sm:w-full max-sm:my-2 btn-secondary"
+                    class="btn btn-outline btn-sm btn-secondary w-full"
                     @click="pb = !pb"
                 >
                     PB: {{ pb ? "Yes" : "No" }}

@@ -45,7 +45,11 @@ export async function getJudges(uid: number, mode: number) {
     return await useWails<JudgesCount>(GetJudgesCountStats, uid, mode);
 }
 
-export async function getGrades(uid: number, mode: number, personalBest: boolean) {
+export async function getGrades(
+    uid: number,
+    mode: number,
+    personalBest: boolean,
+) {
     return await useWails<GradesCount>(GetGradeCount, uid, mode, personalBest);
 }
 

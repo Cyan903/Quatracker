@@ -1,5 +1,8 @@
 <template>
-    <div class="sticky w-full z-[10] h-[1px] top-[80px]" :class="background"></div>
+    <div
+        class="sticky w-full z-[10] h-[1px] top-[80px]"
+        :class="background"
+    ></div>
 </template>
 
 <script lang="ts" setup>

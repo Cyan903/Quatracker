@@ -34,12 +34,12 @@
                 @hide="detailOpen = false"
             />
 
-            <div v-if="stats" class="px-4">
+            <div v-if="stats" class="px-4 mb-10">
+                <GradesItem :id="user.id" :mode="mode ? 2 : 1" />
                 <OverallItem :id="user.id" :mode="mode ? 2 : 1" />
+                <HistoryItem :id="user.id" :mode="mode ? 2 : 1" />
                 <MapsItem :id="user.id" :mode="mode ? 2 : 1" />
                 <JudgesItem :id="user.id" :mode="mode ? 2 : 1" />
-                <GradesItem :id="user.id" :mode="mode ? 2 : 1" />
-                <HistoryItem :id="user.id" :mode="mode ? 2 : 1" />
             </div>
             <div v-else class="px-4">
                 <BestScores :id="user.id" :mode="mode" />

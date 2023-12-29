@@ -221,12 +221,9 @@ const paginate = (n: number) => {
     best();
 };
 
-// TODO: Don't use confirm
 const confirmReset = () => {
-    if (confirm("Are you sure?")) {
-        init();
-        modal.value = false;
-    }
+    init();
+    modal.value = false;
 };
 
 // Refreshing...

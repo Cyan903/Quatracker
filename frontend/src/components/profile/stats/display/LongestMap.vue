@@ -14,7 +14,7 @@
                 <span class="font-bold mr-1">{{ text }}:</span>
                 <span>{{ useComma(map.Total || 0) }}x</span>
             </div>
-            
+
             <button
                 class="btn btn-xs btn-info mt-2"
                 @click="setDetailId(props.map.ScoreID)"
