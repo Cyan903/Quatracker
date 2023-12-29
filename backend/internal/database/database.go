@@ -14,6 +14,7 @@ import (
 
 const DefaultTimeout = 3 * time.Second
 const DefaultPaginate = 10
+const DefaultMiniPaginate = 5
 
 var ErrInvalidPath = errors.New("invalid game path")
 var ErrBGNotFound = errors.New("background file not found")

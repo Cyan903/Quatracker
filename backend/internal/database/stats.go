@@ -48,6 +48,7 @@ type MostPlayed struct {
 	MapID          int
 	Title          string
 	DifficultyName string
+	Creator        string
 	PlayCount      int
 }
 
@@ -246,12 +247,13 @@ func GetMostPlayed(uid, mode, page int) ([]MostPlayed, error) {
 	c, cancel := context.WithTimeout(context.Background(), DefaultTimeout)
 	row, err := Conn.QueryContext(c, `
 		SELECT DISTINCT
-			Map.Id, Map.Title, Map.DifficultyName, Map.TimesPlayed
+			Map.Id, Map.Title, Map.DifficultyName, Map.Creator,
+			Map.TimesPlayed
 		FROM Score join Map WHERE Score.MapMd5 = Map.Md5Checksum
 			AND Score.LocalProfileID = ?
 			AND Map.Mode = ?
-		ORDER BY Map.TimesPlayed DESC LIMIT ?, 10;
-	`, uid, mode, page)
+		ORDER BY Map.TimesPlayed DESC LIMIT ?, 5;
+	`, uid, mode, page*DefaultMiniPaginate)
 
 	defer cancel()
 
@@ -267,6 +269,7 @@ func GetMostPlayed(uid, mode, page int) ([]MostPlayed, error) {
 			&mpmap.MapID,
 			&mpmap.Title,
 			&mpmap.DifficultyName,
+			&mpmap.Creator,
 			&mpmap.PlayCount,
 		); err != nil {
 			log.Error.Println("could not scan GetMostPlayed", err)

@@ -1,4 +1,7 @@
-.score-item {
+.score-item,
+.stat-pop,
+.longest-map,
+.most-map {
     animation: pop 0.2s;
     animation-iteration-count: 1;
 }

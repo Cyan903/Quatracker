@@ -75,8 +75,8 @@
                 </span>
 
                 <span>
-                    <span class="font-bold">LN:</span>
-                    {{ score.Map.LNPercent.toFixed(2) }}%
+                    <span class="font-bold mr-1">LN:</span>
+                    <span>{{ score.Map.LNPercent.toFixed(2) }}%</span>
                 </span>
             </div>
 
@@ -117,8 +117,7 @@
 
 <script lang="ts" setup>
 import type { Scores } from "@/types/scores";
-import type { Ref } from "vue";
-import { inject, onMounted, ref, computed } from "vue";
+import { type Ref, inject, onMounted, ref, computed } from "vue";
 import { useDifficulty, useRank } from "@/use/useColors";
 import { useShorten } from "@/use/useUtil";
 import { useImage } from "@/use/useImage";

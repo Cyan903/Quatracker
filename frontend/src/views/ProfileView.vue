@@ -4,7 +4,7 @@
         <NavbarBorder bg="bg-primary" />
 
         <div
-            class="p-4 bg-base-200 sticky w-full z-[10] top-[81px] rounded-b-xl"
+            class="p-4 bg-base-200 shadow-lg sticky w-full z-[10] top-[81px] rounded-b-xl"
         >
             <div class="flex">
                 <StatsSwitcher
@@ -27,30 +27,23 @@
             </div>
         </div>
 
-        <div>
-            <div v-if="user.id != -1">
-                <DetailPopup
-                    :id="scoreDetailID"
-                    :open="detailOpen"
-                    @hide="detailOpen = false"
-                />
+        <div v-if="user.id != -1">
+            <DetailPopup
+                :id="scoreDetailID"
+                :open="detailOpen"
+                @hide="detailOpen = false"
+            />
 
-                <div v-if="stats" class="px-4">
-                    <OverallItem :id="user.id" :mode="mode" />
-                </div>
-                <div v-else class="px-4">
-                    <BestScores :id="user.id" :mode="mode" />
-                    <RecentScores
-                        class="my-[80px]"
-                        :id="user.id"
-                        :mode="mode"
-                    />
-                </div>
+            <div v-if="stats" class="px-4">
+                <OverallItem :id="user.id" :mode="mode ? 2 : 1" />
+                <MapsItem :id="user.id" :mode="mode ? 2 : 1" />
             </div>
-            <h4 v-else class="font-bold text-center my-4">
-                No users were found.
-            </h4>
+            <div v-else class="px-4">
+                <BestScores :id="user.id" :mode="mode" />
+                <RecentScores class="my-[80px]" :id="user.id" :mode="mode" />
+            </div>
         </div>
+        <h4 v-else class="font-bold text-center my-4">No users were found.</h4>
     </div>
 </template>
 
@@ -70,6 +63,7 @@ import BestScores from "@/components/profile/scores/BestScores.vue";
 import RecentScores from "@/components/profile/scores/RecentScores.vue";
 
 import OverallItem from "@/components/profile/stats/OverallItem.vue";
+import MapsItem from "@/components/profile/stats/MapsItem.vue";
 
 const cfg = useConfigStore();
 const user = reactive({
