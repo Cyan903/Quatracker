@@ -414,7 +414,7 @@ const songLength = computed(() =>
 );
 
 const mods = computed(() => {
-    if (!score.value?.Score.Mods) {
+    if (!score.value?.Score.Mods || score.value.Score.Mods === "0") {
         return ["None"];
     }
 

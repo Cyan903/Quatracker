@@ -1,6 +1,6 @@
 WEB = ${PWD}/frontend
 PKG = npm # pnpm, yarn, etc...
-CLI = wails
+CLI = wails # https://wails.io/docs/reference/cli
 
 format:
 	@printf "Formatting backend...\n"
