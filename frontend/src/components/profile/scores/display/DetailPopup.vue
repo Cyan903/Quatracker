@@ -287,6 +287,7 @@ import { computed, ref, watch } from "vue";
 import { useToast } from "vue-toastification";
 import { useDifficulty, useRank } from "@/use/useColors";
 import { useShorten, useComma } from "@/use/useUtil";
+import { useMods } from "@/use/useMods";
 import { useImage } from "@/use/useImage";
 import { getDetails } from "@/use/useScores";
 
@@ -412,9 +413,12 @@ const songLength = computed(() =>
         .format("mm:ss"),
 );
 
-// TODO: Convert mods
 const mods = computed(() => {
-    return [score.value?.Score.Mods || 0];
+    if (!score.value?.Score.Mods) {
+        return ["None"];
+    }
+
+    return useMods(score.value.Score.Mods, true);
 });
 
 const isStandard = computed(() => {

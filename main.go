@@ -28,8 +28,7 @@ func main() {
 			Handler: app.NewImages(),
 		},
 
-		// TODO: Update this along with UI
-		BackgroundColour: &options.RGBA{R: 27, G: 38, B: 54, A: 0},
+		BackgroundColour: &options.RGBA{R: 29, G: 35, B: 42, A: 255},
 		OnStartup:        app.Startup,
 		Bind:             []interface{}{app},
 	}); err != nil {

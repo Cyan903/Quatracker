@@ -52,7 +52,7 @@
                     }})
                 </span>
 
-                <span>+ {{ mods.join(", ") }}</span>
+                <span v-if="mods.length > 0">+ {{ mods.join(", ") }}</span>
             </div>
 
             <div class="text-xs md:my-2">
@@ -78,6 +78,11 @@
                     <span class="font-bold mr-1">LN:</span>
                     <span>{{ score.Map.LNPercent.toFixed(2) }}%</span>
                 </span>
+
+                <span v-if="mods.length >= 4" class="max-md:hidden">
+                    <span class="mx-1"> / </span>
+                    <span class="font-bold">{{ mods.join(", ") }}</span>
+                </span>
             </div>
 
             <div class="divider my-0 md:hidden"></div>
@@ -91,9 +96,15 @@
         </div>
 
         <div class="max-md:hidden w-[15%] text-center">
-            <h4 v-for="m in mods" :key="m" class="font-bold text-sm">
-                {{ m }}
-            </h4>
+            <template v-if="mods.length > 0 && mods.length <= 5">
+                <div
+                    v-for="m in mods"
+                    :key="m"
+                    class="font-bold text-sm btn btn-xs my-1"
+                >
+                    <span>{{ m }}</span>
+                </div>
+            </template>
         </div>
 
         <div class="max-md:hidden w-[25%] px-8 text-center">
@@ -120,6 +131,7 @@ import type { Scores } from "@/types/scores";
 import { type Ref, inject, onMounted, ref, computed } from "vue";
 import { useDifficulty, useRank } from "@/use/useColors";
 import { useShorten } from "@/use/useUtil";
+import { useMods } from "@/use/useMods";
 import { useImage } from "@/use/useImage";
 
 import moment from "moment";
@@ -143,9 +155,8 @@ const time = computed(() => {
     return moment(d).fromNow();
 });
 
-// TODO: Convert mods
 const mods = computed(() => {
-    return [props.score.Score.Mods];
+    return useMods(props.score.Score.Mods, true);
 });
 
 const gradient = computed(() => {

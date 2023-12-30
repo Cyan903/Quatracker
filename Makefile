@@ -1,6 +1,6 @@
-APP = "QuaverBuddy"
 WEB = ${PWD}/frontend
 PKG = npm # pnpm, yarn, etc...
+CLI = wails
 
 format:
 	@printf "Formatting backend...\n"
@@ -19,9 +19,9 @@ update:
 .PHONY: build
 build:
 	@printf "Building for production...\n\n"
-	@wails build
+	@$(CLI) build
 
 .PHONY: dev
 dev:
 	@printf "Running in development mode...\n\n"
-	@wails dev
+	@$(CLI) dev

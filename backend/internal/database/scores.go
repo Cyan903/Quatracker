@@ -104,9 +104,6 @@ type ScoreDetails struct {
 	}
 }
 
-// TODO: Optional filter by:
-//   - Mods
-//   - Before date
 func GetBestScores(
 	uid, mode, page int,
 
