@@ -3,8 +3,8 @@ package app
 import (
 	"encoding/json"
 
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/config"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/pkg/config"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 )
 
 func (a *App) GetConfig() config.Config {

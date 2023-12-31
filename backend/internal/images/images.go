@@ -6,8 +6,8 @@ import (
 	"strconv"
 	"strings"
 
-	"github.com/Cyan903/QuaverBuddy/backend/internal/database"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/internal/database"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 )
 
 type FileLoader struct {

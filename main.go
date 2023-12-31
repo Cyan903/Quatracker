@@ -7,9 +7,9 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options"
 	"github.com/wailsapp/wails/v2/pkg/options/assetserver"
 
-	"github.com/Cyan903/QuaverBuddy/backend/app"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/config"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/app"
+	"github.com/Cyan903/Quatracker/backend/pkg/config"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 )
 
 //go:embed all:frontend/dist
@@ -20,7 +20,7 @@ func main() {
 	config.Data = config.LoadConfig()
 
 	if err := wails.Run(&options.App{
-		Title:  "QuaverBuddy",
+		Title:  "Quatracker",
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{

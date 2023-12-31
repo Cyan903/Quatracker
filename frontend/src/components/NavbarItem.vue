@@ -1,5 +1,4 @@
 <template>
-    <!-- TODO: A lot of user-select: none -->
     <div class="bg-base-100 sticky w-full z-[10] h-[80px] top-0 p-4">
         <div class="flex justify-between align-middle">
             <img

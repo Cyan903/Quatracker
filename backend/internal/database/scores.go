@@ -5,8 +5,8 @@ import (
 	"database/sql"
 	"fmt"
 
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/api"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/pkg/api"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 )
 
 type ScoreBoard struct {

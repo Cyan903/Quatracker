@@ -1,4 +1,4 @@
-module github.com/Cyan903/QuaverBuddy
+module github.com/Cyan903/Quatracker
 
 go 1.20
 

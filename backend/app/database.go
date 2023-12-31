@@ -1,9 +1,9 @@
 package app
 
 import (
-	"github.com/Cyan903/QuaverBuddy/backend/internal/database"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/api"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/internal/database"
+	"github.com/Cyan903/Quatracker/backend/pkg/api"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 )
 
 func (a *App) LoadDB() error {
