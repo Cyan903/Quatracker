@@ -4,8 +4,8 @@ import (
 	"errors"
 	"os"
 
-	"github.com/Cyan903/QuaverBuddy/backend/internal/database"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/internal/database"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 )
 
 func serve(id int) ([]byte, error) {

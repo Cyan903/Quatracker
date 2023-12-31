@@ -2,29 +2,29 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Wails: Production QuaverBuddy",
+      "name": "Wails: Production Quatracker",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/QuaverBuddy",
+      "program": "${workspaceFolder}/build/bin/Quatracker",
       "preLaunchTask": "build",
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "Wails: Debug QuaverBuddy",
+      "name": "Wails: Debug Quatracker",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/QuaverBuddy",
+      "program": "${workspaceFolder}/build/bin/Quatracker",
       "preLaunchTask": "build debug",
       "cwd": "${workspaceFolder}"
     },
     {
-      "name": "Wails: Dev QuaverBuddy",
+      "name": "Wails: Dev Quatracker",
       "type": "go",
       "request": "launch",
       "mode": "exec",
-      "program": "${workspaceFolder}/build/bin/QuaverBuddy",
+      "program": "${workspaceFolder}/build/bin/Quatracker",
       "preLaunchTask": "build dev",
       "cwd": "${workspaceFolder}"
     }

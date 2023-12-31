@@ -31,7 +31,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to) => {
-    document.title = `${to.meta.title || "Unknown"} | QuaverBuddy`;
+    document.title = `${to.meta.title || "Unknown"} | Quatracker`;
 });
 
 export default router;

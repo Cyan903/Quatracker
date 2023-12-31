@@ -33,7 +33,7 @@
         "-gcflags",
         "all=-N -l",
         "-o",
-        "build/bin/QuaverBuddy"
+        "build/bin/Quatracker"
       ]
     },
     {
@@ -68,7 +68,7 @@
         "-gcflags",
         "all=-N -l",
         "-o",
-        "build/bin/QuaverBuddy"
+        "build/bin/Quatracker"
       ]
     },
     {
@@ -103,7 +103,7 @@
         "-gcflags",
         "all=-N -l",
         "-o",
-        "build/bin/QuaverBuddy"
+        "build/bin/Quatracker"
       ]
     }
   ]

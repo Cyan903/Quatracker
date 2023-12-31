@@ -7,8 +7,8 @@ import (
 	"path"
 	"time"
 
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/config"
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/pkg/config"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 	_ "github.com/mattn/go-sqlite3"
 )
 

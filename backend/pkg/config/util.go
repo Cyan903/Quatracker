@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 )
 
 var ErrMissingItem = errors.New("missing field")

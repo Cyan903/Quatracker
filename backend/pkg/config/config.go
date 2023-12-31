@@ -4,7 +4,7 @@ import (
 	"encoding/json"
 	"os"
 
-	"github.com/Cyan903/QuaverBuddy/backend/pkg/log"
+	"github.com/Cyan903/Quatracker/backend/pkg/log"
 	"github.com/adrg/xdg"
 )
 
@@ -13,7 +13,7 @@ type Config struct {
 	MainMode bool   `json:"MainMode"`
 }
 
-var cfgpath = "QuaverBuddy/config.json"
+var cfgpath = "Quatracker/config.json"
 var Data Config
 
 func CreateConfig() string {
