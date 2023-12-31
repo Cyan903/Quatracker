@@ -9,5 +9,11 @@
     "author": {
         "name": "Cyan903",
         "email": "cyanp0515@gmail.com"
+    },
+
+    "info": {
+        "productName": "Quatracker",
+        "productVersion": "1.0.0",
+        "comments": "Quatracker - a score tracker for Quaver"
     }
 }
