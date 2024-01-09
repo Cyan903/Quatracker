@@ -418,7 +418,13 @@ func CountPlaycountDates(uid, mode int, dates map[string]int) error {
 			continue
 		}
 
-		short := fmt.Sprintf("%d/%d", t.Year(), t.Month())
+		mnth := t.Month()
+		short := fmt.Sprintf("%d/%d", t.Year(), mnth)
+
+		if mnth <= 9 {
+			short = fmt.Sprintf("%d/0%d", t.Year(), mnth)
+		}
+
 		dates[short]++
 	}
 
