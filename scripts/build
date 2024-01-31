@@ -1,0 +1,33 @@
+#/usr/bin/sh
+
+# Basic build script
+# https://wails.io/docs/guides/manual-builds
+
+proj=$(pwd)
+front=$proj/frontend
+
+build_frontend() {
+    install=$($proj/scripts/parse "frontend:install")
+    build=$($proj/scripts/parse "frontend:build")
+
+    cd $front
+
+    printf "Installing -> \`$install\`...\n"
+    $install > /dev/null ; printf "Done \`$install\` ($?)\n"
+
+    printf "Building -> \`$build\`...\n"
+    $build > /dev/null ; printf "Done \`$build\` ($?)\n"
+}
+
+build_app() {
+    projectName=$($proj/scripts/parse "outputfilename")
+    cd $proj
+
+    printf "Building -> \`$projectName\`...\n"
+    go build -tags desktop,production -ldflags "-w -s" -o $proj/build/bin/$projectName $proj/main.go > /dev/null
+
+    printf "Done \`$projectName\` ($?)\n"
+}
+
+build_frontend
+build_app
