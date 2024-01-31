@@ -396,10 +396,9 @@ const fullTitle = computed(
 
 const fullDiff = computed(
     () =>
-        ` [${score.value?.Map
-            ?.DifficultyName}] - (${score.value?.Map?.DifficultyInfo?.Rating.toFixed(
-            2,
-        )})`,
+        ` [${
+            score.value?.Map?.DifficultyName
+        }] - (${score.value?.Map?.DifficultyInfo?.Rating.toFixed(2)})`,
 );
 
 const fullDate = computed(() => {
