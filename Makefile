@@ -28,5 +28,5 @@ dev:
 
 .PHONY: build-linux
 build-linux:
-	@printf "Building for Linux without the Wails CLI...\n\n"
+	@printf "Building for without the Wails CLI...\n\n"
 	@./scripts/build
