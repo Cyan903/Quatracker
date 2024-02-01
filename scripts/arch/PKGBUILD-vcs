@@ -11,7 +11,7 @@ depends=("webkit2gtk")
 makedepends=("git" "go" "nodejs" "npm")
 provides=("quatracker")
 conflicts=("quatracker")
-source=("quatracker::git://github.com/cyan903/quatracker.git")
+source=("$pkgname::git+$url#branch=aur") # TODO: Remove #branch=aur
 md5sums=("SKIP")
 
 pkgver() {
@@ -30,8 +30,9 @@ build() {
 
 package() {
 	cd "$srcdir/${pkgname%-VCS}"
+    projname=$(./scripts/parse "outputfilename")
 
 	# TODO: license and .desktop
-	install -Dm755 ./build/bin/Quatracker "$pkgdir/usr/bin/$pkgname"
-	install -Dm644 ./README.md "$pkgdir/usr/share/doc/$pkgname"
+	install -Dm755 "./build/bin/$projname" "$pkgdir/usr/bin/quatracker"
+	install -Dm644 "./README.md" "$pkgdir/usr/share/doc/quatracker"
 }
