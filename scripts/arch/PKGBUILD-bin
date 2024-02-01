@@ -1,0 +1,42 @@
+# Maintainer: Cyan903 <cyanp0515@gmail.com>
+
+# Very unfinished template
+
+pkgname="quatracker-bin"
+pkgver=1 
+pkgrel=1
+pkgdesc="A score tracker for the rhythm game Quaver."
+arch=("x86_64")
+url="https://github.com/Cyan903/Quatracker"
+license=("MIT")
+depends=("webkit2gtk")
+makedepends=() # TODO
+optdepends=() # TODO: upx
+provides=("quatracker")
+conflicts=("quatracker")
+source=("$pkgname-$pkgver.tar.gz"
+        "$pkgname-$pkgver.patch")
+noextract=()
+md5sums=()
+validpgpkeys=()
+
+prepare() {
+	cd "$pkgname-$pkgver"
+	patch -p1 -i "$srcdir/$pkgname-$pkgver.patch"
+}
+
+build() {
+	cd "$pkgname-$pkgver"
+	./configure --prefix=/usr
+	make
+}
+
+check() {
+	cd "$pkgname-$pkgver"
+	make -k check
+}
+
+package() {
+	cd "$pkgname-$pkgver"
+	make DESTDIR="$pkgdir/" install
+}
