@@ -1,0 +1,37 @@
+# Maintainer: Cyan903 <cyanp0515@gmail.com>
+
+pkgname="quatracker-git"
+pkgver=1
+pkgrel=1
+pkgdesc="A score tracker for the rhythm game Quaver."
+arch=("x86_64")
+url="https://github.com/Cyan903/Quatracker"
+license=("MIT")
+depends=("webkit2gtk")
+makedepends=("git" "go" "node" "npm")
+provides=("quatracker")
+conflicts=("quatracker")
+source=("quatracker::git://github.com/cyan903/quatracker.git")
+md5sums=("SKIP")
+
+pkgver() {
+	cd "$srcdir/${pkgname%-VCS}"
+
+	# TODO: tags
+	# printf "%s" "$(git describe --long | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
+
+	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+	cd "$srcdir/${pkgname%-VCS}"
+	make build-linux
+}
+
+package() {
+	cd "$srcdir/${pkgname%-VCS}"
+
+	# TODO: license and .desktop
+	install -Dm755 ./build/bin/Quatracker "$pkgdir/usr/bin/$pkgname"
+	install -Dm644 ./README.md "$pkgdir/usr/share/doc/$pkgname"
+}

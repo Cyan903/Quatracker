@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-// Very simple wails.json parser
+// Very simple wails.json parser, no need for jq.
 //   parse "frontend:dev:watcher" # Quatracker
 process.stdout.write(
     require("../wails.json")[process.argv.slice(2)[0] || "name"]

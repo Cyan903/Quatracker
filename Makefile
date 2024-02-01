@@ -26,6 +26,7 @@ dev:
 	@printf "Running in development mode...\n\n"
 	@$(CLI) dev
 
+## Building and installing
 .PHONY: build-linux
 build-linux:
 	@printf "Building for without the Wails CLI...\n\n"
