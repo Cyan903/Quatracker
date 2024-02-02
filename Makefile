@@ -1,5 +1,5 @@
 WEB = ${PWD}/frontend
-PKG = npm # pnpm, yarn, etc...
+PKG = pnpm # npm, pnpm, yarn, etc...
 CLI = wails # https://wails.io/docs/reference/cli
 
 format:
@@ -29,5 +29,5 @@ dev:
 ## Building and installing
 .PHONY: build-linux
 build-linux:
-	@printf "Building for without the Wails CLI...\n\n"
+	@printf "Building without the Wails CLI...\n\n"
 	@./scripts/build

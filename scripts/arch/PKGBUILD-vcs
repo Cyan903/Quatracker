@@ -8,7 +8,7 @@ arch=("x86_64")
 url="https://github.com/Cyan903/Quatracker"
 license=("MIT")
 depends=("webkit2gtk")
-makedepends=("git" "go" "nodejs" "npm")
+makedepends=("git" "go" "nodejs" "pnpm")
 provides=("quatracker")
 conflicts=("quatracker")
 source=("$pkgname::git+$url#branch=aur") # TODO: Remove #branch=aur

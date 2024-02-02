@@ -3,30 +3,24 @@
 # Basic build script
 # https://wails.io/docs/guides/manual-builds
 
-proj=$(pwd)
-front=$proj/frontend
+proj_home=$(pwd)
+install_frontend=$($proj_home/scripts/parse "frontend:install")
+build_frontend=$($proj_home/scripts/parse "frontend:build")
+qua_name=$($proj_home/scripts/parse "outputfilename")
 
 build_frontend() {
-    install=$($proj/scripts/parse "frontend:install")
-    build=$($proj/scripts/parse "frontend:build")
+    printf "Installing -> \`$install_frontend\`...\n"
+    cd $proj_home/frontend ; $install_frontend ; printf "Done \`pnpm i\` ($?)\n"
 
-    cd $front
-
-    printf "Installing -> \`$install\`...\n"
-    $install > /dev/null ; printf "Done \`$install\` ($?)\n"
-
-    printf "Building -> \`$build\`...\n"
-    $build > /dev/null ; printf "Done \`$build\` ($?)\n"
+    printf "Building -> \`$build_frontend\`...\n"
+    $build_frontend > /dev/null ; printf "Done \`pnpm run build\` ($?)\n"
 }
 
 build_app() {
-    projectName=$($proj/scripts/parse "outputfilename")
-    cd $proj
+    printf "Building -> \`$qua_name\`...\n"
+    cd $proj_home ; go build -tags desktop,production -ldflags "-w -s" -o $proj_home/build/bin/$qua_name $proj_home/main.go > /dev/null
 
-    printf "Building -> \`$projectName\`...\n"
-    go build -tags desktop,production -ldflags "-w -s" -o $proj/build/bin/$projectName $proj/main.go > /dev/null
-
-    printf "Done \`$projectName\` ($?)\n"
+    printf "Done \`$qua_name\` ($?)\n"
 }
 
 build_frontend
