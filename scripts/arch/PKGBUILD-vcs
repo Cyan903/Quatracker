@@ -11,7 +11,7 @@ depends=("webkit2gtk")
 makedepends=("git" "go" "nodejs" "pnpm")
 provides=("quatracker")
 conflicts=("quatracker")
-source=("$pkgname::git+$url#branch=aur") # TODO: Remove #branch=aur
+source=("$pkgname::git+$url#branch=aur") # TODO: Remove #branch=aur and add .git to the end
 md5sums=("SKIP")
 
 pkgver() {
@@ -32,7 +32,11 @@ package() {
     cd "$srcdir/${pkgname%-VCS}"
     projname=$(./scripts/parse "outputfilename")
 
-    # TODO: license and .desktop
+    # TODO: .desktop and icon - current one is too big :(
     install -Dm755 "./build/bin/$projname" "$pkgdir/usr/bin/quatracker"
-    install -Dm644 "./README.md" "$pkgdir/usr/share/doc/quatracker"
+    install -Dm644 "./README.md" "$pkgdir/usr/share/doc/$pkgname/README"
+    install -Dm644 "./LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+    install -Dm644 "quatracker.desktop" "$pkgdir/usr/share/applications/quatracker.desktop"
+    install -Dm644 "$pkgname/scripts/package/quatracker.png" "$pkgdir/usr/share/pixmaps/quatracker.png"
 }

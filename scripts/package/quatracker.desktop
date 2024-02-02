@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Quatracker
+Comment=Flash card based learning tool
+Path=/usr/bin/quatracker
+Exec=quatracker
+Icon=quatracker
+Terminal=false
+Categories=Game;
