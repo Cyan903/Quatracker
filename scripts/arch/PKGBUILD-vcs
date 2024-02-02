@@ -15,24 +15,24 @@ source=("$pkgname::git+$url#branch=aur") # TODO: Remove #branch=aur
 md5sums=("SKIP")
 
 pkgver() {
-	cd "$srcdir/${pkgname%-VCS}"
+    cd "$srcdir/${pkgname%-VCS}"
 
-	# TODO: tags
-	# printf "%s" "$(git describe --long | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
+    # TODO: tags
+    # printf "%s" "$(git describe --long | sed 's/\([^-]*-\)g/r\1/;s/-/./g')"
 
-	printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
 }
 
 build() {
-	cd "$srcdir/${pkgname%-VCS}"
-	make build-linux
+    cd "$srcdir/${pkgname%-VCS}"
+    make build-linux
 }
 
 package() {
-	cd "$srcdir/${pkgname%-VCS}"
+    cd "$srcdir/${pkgname%-VCS}"
     projname=$(./scripts/parse "outputfilename")
 
-	# TODO: license and .desktop
-	install -Dm755 "./build/bin/$projname" "$pkgdir/usr/bin/quatracker"
-	install -Dm644 "./README.md" "$pkgdir/usr/share/doc/quatracker"
+    # TODO: license and .desktop
+    install -Dm755 "./build/bin/$projname" "$pkgdir/usr/bin/quatracker"
+    install -Dm644 "./README.md" "$pkgdir/usr/share/doc/quatracker"
 }
