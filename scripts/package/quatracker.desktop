@@ -2,7 +2,6 @@
 Type=Application
 Name=Quatracker
 Comment=A score tracker for the rhythm game Quaver.
-Path=/usr/bin/quatracker
 Exec=quatracker
 Icon=quatracker
 Terminal=false
