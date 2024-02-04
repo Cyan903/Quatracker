@@ -1,0 +1,8 @@
+[Desktop Entry]
+Type=Application
+Name=Quatracker
+Comment=A score tracker for the rhythm game Quaver.
+Exec=quatracker
+Icon=quatracker
+Terminal=false
+Categories=Game;

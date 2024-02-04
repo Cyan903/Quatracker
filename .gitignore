@@ -1,8 +1,7 @@
 # Build
-build/bin
-node_modules
+/build/bin/*
+!/build/bin/.gitkeep
 
 # Frontend
-frontend/dist
-frontend/wailsjs
-frontend/package.json.md5
+/frontend/node_modules
+/frontend/dist
