@@ -1,7 +1,7 @@
 [Desktop Entry]
 Type=Application
 Name=Quatracker
-Comment=Flash card based learning tool
+Comment=A score tracker for the rhythm game Quaver.
 Path=/usr/bin/quatracker
 Exec=quatracker
 Icon=quatracker

@@ -1,6 +1,7 @@
 # Build
-build/bin
-frontend/dist
+/build/bin/*
+!/build/bin/.gitkeep
 
 # Frontend
-node_modules
+/frontend/node_modules
+/frontend/dist

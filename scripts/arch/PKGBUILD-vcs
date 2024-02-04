@@ -32,11 +32,12 @@ package() {
     cd "$srcdir/${pkgname%-VCS}"
     projname=$(./scripts/parse "outputfilename")
 
-    # TODO: .desktop and icon - current one is too big :(
     install -Dm755 "./build/bin/$projname" "$pkgdir/usr/bin/quatracker"
     install -Dm644 "./README.md" "$pkgdir/usr/share/doc/$pkgname/README"
     install -Dm644 "./LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
 
-    install -Dm644 "quatracker.desktop" "$pkgdir/usr/share/applications/quatracker.desktop"
-    install -Dm644 "$pkgname/scripts/package/quatracker.png" "$pkgdir/usr/share/pixmaps/quatracker.png"
+    # TODO: .desktop and icon - current one is too big :(
+    # the .desktop /usr/bin is broken
+    install -Dm644 "./scripts/package/quatracker.desktop" "$pkgdir/usr/share/applications/quatracker.desktop"
+    install -Dm644 "./scripts/package/quatracker.png" "$pkgdir/usr/share/pixmaps/quatracker.png"
 }
