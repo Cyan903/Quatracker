@@ -11,7 +11,7 @@ depends=("webkit2gtk")
 makedepends=("git" "go" "nodejs" "pnpm")
 provides=("quatracker")
 conflicts=("quatracker")
-source=("$pkgname::git+$url.git#branch=aur") # TODO: Remove #branch=aur
+source=("$pkgname::git+$url.git")
 md5sums=("SKIP")
 
 pkgver() {
