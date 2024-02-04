@@ -26,8 +26,13 @@ dev:
 	@printf "Running in development mode...\n\n"
 	@$(CLI) dev
 
-## Building and installing
+## Platforms
 .PHONY: build-linux
 build-linux:
 	@printf "Building without the Wails CLI...\n\n"
 	@./scripts/build
+
+.PHONY: build-windows
+build-windows:
+	@printf "Building for windows with the Wails CLI...\n\n"
+	@CGO_ENABLED=1 GOOS=windows wails build -platform windows
