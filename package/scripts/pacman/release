@@ -3,6 +3,9 @@
 # Automatically create /package/release with proper
 # PKGBUILD and assets
 
+pkgver=$(jq --raw-output ".info.productVersion" wails.json)
+projname=$(jq --raw-output ".outputfilename" wails.json)
+
 copy_files() {
 	echo "Copying build and assets..."
 
@@ -18,15 +21,23 @@ copy_files() {
 	echo "Done"
 }
 
-update_data() {
-	echo "Writing PKGBUILD..."
-
-	pkgver=$(jq --raw-output ".info.productVersion" wails.json)
-	projname=$(jq --raw-output ".outputfilename" wails.json)
-	shaa=$(sha256sum build/bin/"$projname" | awk '{print $1}')
+create_tar() {
+	echo "Creating tar..."
 
 	# Ensure file will always be named "quatracker"
 	mv package/release/dist/"$projname" package/release/dist/quatracker
+
+	cd package/release/dist || exit 1
+	tar -czvf ../quatracker-"$pkgver"-amd64.tar.gz .
+	cd - || exit 1
+
+	echo "Done"
+}
+
+update_data() {
+	echo "Writing PKGBUILD..."
+
+	shaa=$(sha256sum package/release/quatracker-"$pkgver"-amd64.tar.gz | awk '{print $1}')
 
 	sed -i "s/pkgver=/pkgver=$pkgver/" package/release/PKGBUILD
 	sed -i "s/sha256sums=/sha256sums=(\"$shaa\")/" package/release/PKGBUILD
@@ -34,15 +45,6 @@ update_data() {
 	echo "Done \`pkgver=$pkgver | sha256sum=$shaa\`"
 }
 
-create_tar() {
-	echo "Creating tar..."
-
-	cd package/release || exit 1
-	tar -czvf quatracker_amd64_linux.tar.gz .
-	cd - || exit 1
-
-}
-
 copy_files
-update_data
 create_tar
+update_data
