@@ -5,3 +5,7 @@
 # Frontend
 /frontend/node_modules
 /frontend/dist
+
+# Package
+/package/release/*
+!/package/release/.gitkeep

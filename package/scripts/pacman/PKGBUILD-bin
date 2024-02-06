@@ -1,0 +1,24 @@
+# Maintainer: Cyan903 <cyanp0515@gmail.com>
+
+pkgname="quatracker-bin"
+pkgver=
+pkgrel=1
+pkgdesc="A score tracker for the rhythm game Quaver."
+arch=("x86_64")
+url="https://github.com/Cyan903/Quatracker"
+license=("MIT")
+depends=("webkit2gtk")
+provides=("quatracker")
+conflicts=("quatracker")
+source=("$pkgname-$pkgver::$url/releases/download/v$pkgver/quatracker_amd64_linux.tar.gz")
+sha256sums=
+
+package() {
+	cd "$pkgname-$pkgver"
+	install -Dm755 "./quatracker" "$pkgdir/usr/bin/quatracker"
+	install -Dm644 "./README.md" "$pkgdir/usr/share/doc/$pkgname/README"
+	install -Dm644 "./LICENSE" "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
+
+	install -Dm644 "./quatracker.desktop" "$pkgdir/usr/share/applications/quatracker.desktop"
+	install -Dm644 "./quatracker.png" "$pkgdir/usr/share/pixmaps/quatracker.png"
+}

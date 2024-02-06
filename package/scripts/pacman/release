@@ -1,0 +1,48 @@
+#!/usr/bin/sh
+
+# Automatically create /package/release with proper
+# PKGBUILD and assets
+
+copy_files() {
+	echo "Copying build and assets..."
+
+	mkdir package/release/dist
+
+	cp -r build/bin/* package/release/dist
+	cp -r package/assets/* package/release/dist
+	
+	cp LICENSE package/release/dist
+	cp README.md package/release/dist
+	cp package/scripts/pacman/PKGBUILD-bin package/release/PKGBUILD
+
+	echo "Done"
+}
+
+update_data() {
+	echo "Writing PKGBUILD..."
+
+	pkgver=$(jq --raw-output ".info.productVersion" wails.json)
+	projname=$(jq --raw-output ".outputfilename" wails.json)
+	shaa=$(sha256sum build/bin/"$projname" | awk '{print $1}')
+
+	# Ensure file will always be named "quatracker"
+	mv package/release/dist/"$projname" package/release/dist/quatracker
+
+	sed -i "s/pkgver=/pkgver=$pkgver/" package/release/PKGBUILD
+	sed -i "s/sha256sums=/sha256sums=(\"$shaa\")/" package/release/PKGBUILD
+
+	echo "Done \`pkgver=$pkgver | sha256sum=$shaa\`"
+}
+
+create_tar() {
+	echo "Creating tar..."
+
+	cd package/release || exit 1
+	tar -czvf quatracker_amd64_linux.tar.gz .
+	cd - || exit 1
+
+}
+
+copy_files
+update_data
+create_tar

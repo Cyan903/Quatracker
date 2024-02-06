@@ -1,0 +1,29 @@
+#!/usr/bin/sh
+
+# Basic build script
+# https://wails.io/docs/guides/manual-builds
+
+proj_home=$(pwd)
+install_frontend=$(jq --raw-output '."frontend:install"' "$proj_home"/wails.json)
+build_frontend=$(jq --raw-output '."frontend:build"' "$proj_home"/wails.json)
+qua_name=$(jq --raw-output ".outputfilename" "$proj_home"/wails.json)
+
+build_frontend() {
+	echo "Installing -> \`$install_frontend\`..."
+	cd "$proj_home"/frontend || exit 1 ; $install_frontend ; echo "Done \`$install_frontend\` ($?)"
+
+	echo "Building -> \`$build_frontend\`..."
+	$build_frontend > /dev/null ; echo "Done \`$build_frontend\` ($?)"
+}
+
+build_app() {
+	echo "Building -> \`$qua_name\`..."
+	
+	cd "$proj_home" || exit 1
+	go build -tags desktop,production -ldflags "-w -s" -o "$proj_home"/build/bin/"$qua_name" "$proj_home"/main.go > /dev/null
+
+	echo "Done \`$qua_name\` ($?)"
+}
+
+build_frontend
+build_app
