@@ -21,12 +21,21 @@ A cross-platform score tracker for the rhythm game [Quaver](https://quavergame.c
 
 - Advanced score filter
 - Play history graph
-- Judgement statistics
+- Judgment statistics
 - Map statistics
 - Overall statistics
 - Grade tracker
 - Unknown profiles
 - Custom filters
+
+## Installing
+
+Check out the [releases](https://github.com/Cyan903/Quatracker/releases) page. If you're using Arch you can install Quatracker through the AUR:
+
+```sh
+$ paru -S quatracker-git # or any other AUR helper
+$ paru -S quatracker-bin
+```
 
 ## Building
 
