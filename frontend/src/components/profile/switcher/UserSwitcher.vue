@@ -27,7 +27,7 @@
             </li>
         </ul>
     </div>
-    <button v-else class="btn btn btn-sm" disabled>No users found!</button>
+    <button v-else class="btn btn-sm" disabled>No users found!</button>
 </template>
 
 <script lang="ts" setup>
