@@ -5,7 +5,7 @@
             <span class="text-lg align-middle">Default key mode:</span>
         </div>
 
-        <p class="my-2">Remember the prefered key mode.</p>
+        <p class="my-2">Remember the preferred key mode.</p>
 
         <select
             class="select select-bordered max-sm:w-full max-sm:my-2 sm:min-w-[250px]"
