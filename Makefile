@@ -1,5 +1,5 @@
 WEB = ${PWD}/frontend
-PKG = pnpm # npm, pnpm, yarn, etc...
+PKG = pnpm # npm, pnpm
 CLI = wails # https://wails.io/docs/reference/cli
 
 format:
@@ -43,6 +43,7 @@ build-windows:
 	@printf "Building for windows with the Wails CLI...\n\n"
 	@CGO_ENABLED=1 GOOS=windows wails build -platform windows
 
+# https://wiki.archlinux.org/title/PKGBUILD
 .PHONY: pkgbuild
 pkgbuild:
 	@printf "Creating PKGBUILD for release...\n\n"
