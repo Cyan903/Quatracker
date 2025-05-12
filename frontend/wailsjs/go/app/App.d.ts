@@ -28,7 +28,7 @@ export function GetTotalStats(arg1:number,arg2:number):Promise<database.TotalSta
 
 export function GetUserJudgements():Promise<Array<string>>;
 
-export function GetUserPlayGraph(arg1:number,arg2:number):Promise<{[key: string]: number}>;
+export function GetUserPlayGraph(arg1:number,arg2:number):Promise<Record<string, number>>;
 
 export function GetUsers():Promise<database.Users>;
 
